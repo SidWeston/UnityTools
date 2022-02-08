@@ -6,20 +6,21 @@ public class AStarNode : IHeapItem<AStarNode>
 {
     public bool walkable;
     public Vector3 worldPosition;
-    public int gridX, gridY;
+    public int gridX, gridZ;
+    public float nodeRotation;
 
     public int gCost, hCost;
     public AStarNode parent;
     int heapIndex;
 
     //Constructor
-    public AStarNode(bool a_walkable, Vector3 a_worldPosition, int a_gridX, int a_gridY)
+    public AStarNode(bool a_walkable, Vector3 a_worldPosition, int a_gridX, int a_gridZ)
     {
         walkable = a_walkable;
         worldPosition = a_worldPosition;
         worldPosition.y += 0.5f; //set slightly higher on y axis so point isn't inside the ground
         gridX = a_gridX;
-        gridY = a_gridY;
+        gridZ = a_gridZ;
     }
 
     //fCost is gCost + hCost

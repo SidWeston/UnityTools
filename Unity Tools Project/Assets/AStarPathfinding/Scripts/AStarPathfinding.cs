@@ -120,7 +120,7 @@ public class AStarPathfinding : MonoBehaviour
 
         for(int i = 1; i < path.Count; i++)
         {
-            Vector2 newDirection = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
+            Vector2 newDirection = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridZ - path[i].gridZ);
             if (newDirection != oldDirection)
             {
                 waypoints.Add(path[i].worldPosition);
@@ -134,7 +134,7 @@ public class AStarPathfinding : MonoBehaviour
     private int GetDistance(AStarNode nodeA, AStarNode nodeB)
     {
         int distX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
-        int distY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
+        int distY = Mathf.Abs(nodeA.gridZ - nodeB.gridZ);
 
         if(distX > distY)
         {
