@@ -79,6 +79,7 @@ public class AStarPathfinding : MonoBehaviour
         if(pathSuccess)
         {
             waypoints = RetracePath(startNode, targetNode);
+            pathSuccess = waypoints.Length > 0;
         }
         requestManager.FinishedProcessingPath(waypoints, pathSuccess);
     }
@@ -93,10 +94,13 @@ public class AStarPathfinding : MonoBehaviour
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
-        Vector3[] waypoints = SimplifyPath(path);
-        Array.Reverse(waypoints);
-
-        return waypoints;
+        List<Vector3> waypoints = new List<Vector3>();
+        for(int i = 1; i < path.Count; i++)
+        {
+            waypoints.Add(path[i].worldPosition);
+        }
+        waypoints.Reverse();
+        return waypoints.ToArray();
 
     }
 
