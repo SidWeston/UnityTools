@@ -86,24 +86,33 @@ public class AStarPathfinding : MonoBehaviour
 
     private Vector3[] RetracePath(AStarNode startNode, AStarNode targetNode)
     {
+        //list is used as it is impossible to know how many nodes are needed to get to the target,
+        //lists can have their length changed, unlike arrays
         List<AStarNode> path = new List<AStarNode>();
+        //start at the target node and work backwards
         AStarNode currentNode = targetNode;
-
+        
+        //not at start node means there are still nodes in-between the start and end nodes
         while(currentNode != startNode)
         {
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
+        //convert the list of nodes into a vector3 list with the node positions
         List<Vector3> waypoints = new List<Vector3>();
+        //loop through and add the node positions to the array
         for(int i = 1; i < path.Count; i++)
         {
             waypoints.Add(path[i].worldPosition);
         }
+        //reverse the waypoints so the first point is closest to the unit
         waypoints.Reverse();
+        //convert list to an array
         return waypoints.ToArray();
 
     }
 
+    //simplify path will cut out a grid node if the direction doesn't change
     Vector3[] SimplifyPath(List<AStarNode> path)
     {
         List<Vector3> waypoints = new List<Vector3>();

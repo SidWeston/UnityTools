@@ -6,10 +6,14 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
 
+    [Header("Unit Movement")]
+    [Tooltip("The GameObject that the AI unit will generate paths to and move towards.")]
     public Transform target;
     //the delay between the unit requesting new a new updated path from the path request manager
-    [Range(0, 5)]
+    [Range(0, 2)]
+    [Tooltip("The delay between the unit requesting a new updated path from the path request manager. Accounts for moving targets.")]
     public float newPathRequestDelay;
+    [Tooltip("How fast the unit will move towards it's target.")]
     public float moveSpeed = 5;
 
     [HideInInspector]

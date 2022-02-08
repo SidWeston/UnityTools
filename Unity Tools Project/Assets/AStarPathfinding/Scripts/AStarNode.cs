@@ -17,12 +17,13 @@ public class AStarNode : IHeapItem<AStarNode>
     {
         walkable = a_walkable;
         worldPosition = a_worldPosition;
-        worldPosition.y += 0.5f;
+        worldPosition.y += 0.5f; //set slightly higher on y axis so point isn't inside the ground
         gridX = a_gridX;
         gridY = a_gridY;
     }
 
     //fCost is gCost + hCost
+    //fCost is used to help determine the shortest path
     public int fCost 
     {
         get
@@ -47,9 +48,12 @@ public class AStarNode : IHeapItem<AStarNode>
 
     public int CompareTo(AStarNode nodeToCompare)
     {
+        //int.CompareTo returns 0 if the int is equal to what it is being compared to
         int compare = fCost.CompareTo(nodeToCompare.fCost);
-        if(compare == 0)
+        //if the fCost of both nodes are equal
+        if(compare == 0) 
         {
+            //compare the hCost to find the cheapest node
             compare = hCost.CompareTo(nodeToCompare.hCost);
         }
         return -compare;

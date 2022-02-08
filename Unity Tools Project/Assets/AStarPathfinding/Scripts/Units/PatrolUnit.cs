@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PatrolUnit : Unit
 {
-
+    [Space(20)]
+    [Header("Patrol Information")]
     public GameObject[] patrolPoints;
     public float patrolWaitTime;
-    private int currentPatrolPointIndex = 0;
 
+    private int currentPatrolPointIndex = 0;
     private bool followPath = true;
 
     // Start is called before the first frame update

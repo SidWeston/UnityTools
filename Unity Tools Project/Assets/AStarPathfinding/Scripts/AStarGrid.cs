@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class AStarGrid : MonoBehaviour
 {
-
+    [Tooltip("Should the navigation grid be displayed in the game view?")]
     public bool displayGridGizmos;
+
+    [Header("Grid Info")]
+    [Tooltip("What layer(s) the path-finding grid will mark as un-walkable.")]
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
     AStarNode[,] nodeGrid;
 
-    float nodeDiameter;
-    int gridSizeX, gridSizeY;
+    private float nodeDiameter;
+    private int gridSizeX, gridSizeY;
 
     public List<AStarNode> path;
 
