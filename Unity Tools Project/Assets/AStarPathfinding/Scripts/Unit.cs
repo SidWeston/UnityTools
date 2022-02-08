@@ -12,23 +12,25 @@ public class Unit : MonoBehaviour
     public float newPathRequestDelay;
     public float moveSpeed = 5;
 
+    [HideInInspector]
     public Vector3[] path;
-    int targetIndex;
-    float rotationSpeed = 5;
+    protected int targetIndex;
+    protected float rotationSpeed = 5;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
+        //gets initial path and then gets a new one after a set delay and repeats until game stops
         InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
     }
 
-    public void RequestNewPath()
+    public virtual void RequestNewPath()
     {
         //request a new path from the path request manager
         PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
     }
 
-    public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
+    public virtual void OnPathFound(Vector3[] newPath, bool pathSuccessful)
     {
         if(pathSuccessful)
         {
@@ -41,7 +43,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    IEnumerator FollowPath()
+    public virtual IEnumerator FollowPath()
     {
         //first waypoint is 0 in the array
         Vector3 currentWaypoint = path[0];
@@ -78,7 +80,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void OnDrawGizmos()
+    public virtual void OnDrawGizmos()
     {
         //draw a line along the path the ai unit will follow
         if(path != null)

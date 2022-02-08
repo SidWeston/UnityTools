@@ -17,6 +17,7 @@ public class AStarNode : IHeapItem<AStarNode>
     {
         walkable = a_walkable;
         worldPosition = a_worldPosition;
+        worldPosition.y += 0.5f;
         gridX = a_gridX;
         gridY = a_gridY;
     }
