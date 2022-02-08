@@ -72,11 +72,6 @@ public class AStarGrid : MonoBehaviour
         return position.y;
     }
 
-    private float CheckNodeRotation()
-    {
-        return 0;
-    }
-
     public List<AStarNode> GetNeighbours(AStarNode currentNode)
     {
         List<AStarNode> neighbours = new List<AStarNode>();
