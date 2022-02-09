@@ -16,7 +16,7 @@ public class AStarGrid : MonoBehaviour
     AStarNode[,] nodeGrid;
 
     private float nodeDiameter;
-    private int gridSizeX, gridSizeY, gridSizeZ;
+    private int gridSizeX, gridSizeZ;
 
     public List<AStarNode> path;
 
@@ -26,7 +26,6 @@ public class AStarGrid : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
-        gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
         CreateGrid();
     }
 
@@ -41,16 +40,23 @@ public class AStarGrid : MonoBehaviour
 
     private void CreateGrid()
     {
+        //setup the array of nodes with specified size
         nodeGrid = new AStarNode[gridSizeX, gridSizeZ];
+        //get the position of the bottom left corner of the node grid
         Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.z / 2;
 
+        //loop through both x and z axis to create grid of nodes
         for(int x = 0; x < gridSizeX; x++)
         {
             for(int z = 0; z < gridSizeZ; z++)
             {
+                //get the vector3 coords of the current node based on the bottom left of the grid
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (z * nodeDiameter + nodeRadius);
+                //check if there is terrain in the x and z coordinates of the grid
                 worldPoint.y = CheckNodeHeight(worldPoint);
+                //check if the current node overlaps with any unwalkable obstacle
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
+                //construct a node with these values
                 nodeGrid[x, z] = new AStarNode(walkable, worldPoint, x, z);
             }
         }
@@ -58,27 +64,30 @@ public class AStarGrid : MonoBehaviour
 
     private float CheckNodeHeight(Vector3 position)
     {
+        //store original y value temporarily
+        float tempStore = position.y;
+        //set y value to be at the top of the bounding box
+        position.y = gridWorldSize.y;
+        //perform a raycast to test if there is ground beneath the current node
         RaycastHit hit;
-        if(Physics.Raycast(position, Vector3.up, out hit, gridWorldSize.y/2, whatIsGround))
+        if(Physics.Raycast(position, Vector3.down, out hit, gridWorldSize.y, whatIsGround))
         {
-            Debug.Log("Checking Up");
+            //if there is ground hit return the y value of the hit position
             return hit.point.y;
         }
-        else if(Physics.Raycast(position, Vector3.down, out hit, gridWorldSize.y/2, whatIsGround))
-        {
-            Debug.Log("Checking Down");
-            return hit.point.y;
-        }
-        return position.y;
+        //if nothing is hit return original value
+        return tempStore;
     }
 
     public List<AStarNode> GetNeighbours(AStarNode currentNode)
     {
+        //list to contain all the neighbouring nodes of the current node
         List<AStarNode> neighbours = new List<AStarNode>();
         for(int x = -1; x <= 1; x++)
         {
             for(int z = -1; z <= 1; z++)
             {
+                //if both equal 0 the node being checked is the current node
                 if(x == 0 && z == 0)
                 {
                     continue;
@@ -110,7 +119,7 @@ public class AStarGrid : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, gridWorldSize.z));
-        if(nodeGrid != null && displayGridGizmos)
+        if (nodeGrid != null && displayGridGizmos)
         {
             foreach (AStarNode node in nodeGrid)
             {
