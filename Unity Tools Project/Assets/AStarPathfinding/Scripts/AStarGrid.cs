@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 public class AStarGrid : MonoBehaviour
 {
     [Tooltip("Should the navigation grid be displayed in the game view?")]
@@ -23,9 +24,8 @@ public class AStarGrid : MonoBehaviour
 
     private void Awake()
     {
-        nodeDiameter = nodeRadius * 2;
-        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
-        gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
+
+
         CreateGrid();
     }
 
@@ -37,8 +37,20 @@ public class AStarGrid : MonoBehaviour
         }
     }
 
+    void DestroyGrid()
+    {
+        if(nodeGrid != null)
+        {
+            Array.Clear(nodeGrid, 0, nodeGrid.Length);
+        }
+    }
+
     public void CreateGrid()
     {
+        nodeDiameter = nodeRadius * 2;
+        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
+        gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
+        DestroyGrid();
         //setup the array of nodes with specified size
         nodeGrid = new AStarNode[gridSizeX, gridSizeZ];
         //get the position of the bottom left corner of the node grid
@@ -64,7 +76,7 @@ public class AStarGrid : MonoBehaviour
     private float CheckNodeHeight(Vector3 position)
     {
         //store original y value temporarily
-        float tempStore = position.y;
+        float temp = position.y;
         //set y value to be at the top of the bounding box
         position.y = gridWorldSize.y;
         //perform a raycast to test if there is ground beneath the current node
@@ -75,7 +87,7 @@ public class AStarGrid : MonoBehaviour
             return hit.point.y;
         }
         //if nothing is hit return original value
-        return tempStore;
+        return temp;
     }
 
     public List<AStarNode> GetNeighbours(AStarNode currentNode)
