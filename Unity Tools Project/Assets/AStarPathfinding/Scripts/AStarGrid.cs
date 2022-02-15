@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class AStarGrid : MonoBehaviour
 {
     [Tooltip("Should the navigation grid be displayed in the game view?")]
@@ -20,13 +21,11 @@ public class AStarGrid : MonoBehaviour
 
     public List<AStarNode> path;
 
-
     private void Awake()
     {
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
-        CreateGrid();
     }
 
     public int MaxHeapSize
@@ -38,7 +37,7 @@ public class AStarGrid : MonoBehaviour
     }
 
 
-    private void CreateGrid()
+    public void CreateGrid()
     {
         //setup the array of nodes with specified size
         nodeGrid = new AStarNode[gridSizeX, gridSizeZ];
@@ -124,7 +123,7 @@ public class AStarGrid : MonoBehaviour
             foreach (AStarNode node in nodeGrid)
             {
                 Gizmos.color = (node.walkable) ? Color.white : Color.red;
-                Gizmos.DrawCube(node.worldPosition, new Vector3(nodeDiameter - 0.1f, 0.1f, nodeDiameter - 0.1f));
+                Gizmos.DrawCube(new Vector3(node.worldPosition.x, node.worldPosition.y - 0.4f, node.worldPosition.z), new Vector3(nodeDiameter - 0.1f, 0.1f, nodeDiameter - 0.1f));
             }
         }
     }
