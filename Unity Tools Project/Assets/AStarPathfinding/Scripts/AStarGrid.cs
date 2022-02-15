@@ -26,6 +26,7 @@ public class AStarGrid : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
+        CreateGrid();
     }
 
     public int MaxHeapSize
@@ -35,7 +36,6 @@ public class AStarGrid : MonoBehaviour
             return gridSizeX * gridSizeZ;
         }
     }
-
 
     public void CreateGrid()
     {
