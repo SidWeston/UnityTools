@@ -47,10 +47,13 @@ public class AStarGrid : MonoBehaviour
 
     public void CreateGrid()
     {
+
+        DestroyGrid();
+
+        //set path grid parameters
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
-        DestroyGrid();
         //setup the array of nodes with specified size
         nodeGrid = new AStarNode[gridSizeX, gridSizeZ];
         //get the position of the bottom left corner of the node grid
