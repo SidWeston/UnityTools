@@ -19,6 +19,7 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public Vector3[] path;
     protected int targetIndex;
+    protected bool shouldRotateNextPoint = true;
     protected float rotationSpeed = 5;
 
     // Start is called before the first frame update
@@ -82,6 +83,17 @@ public class Unit : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    public virtual void StartChaseObject(GameObject newTarget)
+    {
+        target = newTarget.transform;
+        InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
+    }
+
+    public virtual void ResetFollowPath()
+    {
+        CancelInvoke("RequestNewPath");
     }
 
     public virtual void OnDrawGizmos()

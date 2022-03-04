@@ -429,14 +429,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b962a3e2cd85f14bb9f9a034987a42b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayGridGizmos: 1
+  displayGridGizmos: 0
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 512
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  gridWorldSize: {x: 30, y: 10, z: 30}
+  gridWorldSize: {x: 65, y: 10, z: 30}
   nodeRadius: 0.25
 --- !u!4 &333288235
 Transform:
@@ -675,6 +675,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5624847754750273476, guid: 63162de8bb382c84b8c4bd93287ebb12,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5624847755423032812, guid: 63162de8bb382c84b8c4bd93287ebb12,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5624847755651669524, guid: 63162de8bb382c84b8c4bd93287ebb12,
         type: 3}
       propertyPath: m_RootOrder
@@ -683,7 +693,7 @@ PrefabInstance:
     - target: {fileID: 5624847755651669524, guid: 63162de8bb382c84b8c4bd93287ebb12,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.83396
+      value: -0.16
       objectReference: {fileID: 0}
     - target: {fileID: 5624847755651669524, guid: 63162de8bb382c84b8c4bd93287ebb12,
         type: 3}
@@ -693,7 +703,7 @@ PrefabInstance:
     - target: {fileID: 5624847755651669524, guid: 63162de8bb382c84b8c4bd93287ebb12,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.5350866
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 5624847755651669524, guid: 63162de8bb382c84b8c4bd93287ebb12,
         type: 3}
@@ -737,10 +747,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5624847755651669531, guid: 63162de8bb382c84b8c4bd93287ebb12,
         type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5624847755651669531, guid: 63162de8bb382c84b8c4bd93287ebb12,
+        type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5624847755780461304, guid: 63162de8bb382c84b8c4bd93287ebb12,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5624847754750273478, guid: 63162de8bb382c84b8c4bd93287ebb12, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 63162de8bb382c84b8c4bd93287ebb12, type: 3}
 --- !u!1 &557826580
 GameObject:
@@ -1070,6 +1091,7 @@ GameObject:
   - component: {fileID: 1462396045}
   - component: {fileID: 1462396044}
   - component: {fileID: 1462396048}
+  - component: {fileID: 1462396050}
   - component: {fileID: 1462396049}
   m_Layer: 0
   m_Name: Seeker
@@ -1169,7 +1191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  newPathRequestDelay: 0.1
+  newPathRequestDelay: 0.2
   moveSpeed: 5
   path: []
   patrolPoints:
@@ -1178,19 +1200,95 @@ MonoBehaviour:
   - {fileID: 2035525507}
   - {fileID: 1652029623}
   patrolWaitTime: 1
---- !u!65 &1462396049
-BoxCollider:
+--- !u!114 &1462396049
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462396043}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 1, z: 8}
-  m_Center: {x: 0, y: 0, z: 3.5}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50262d2aee2759848be561eb159cfaff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorDistance: 10
+  sensorAngle: 30
+  sensorHeight: 2
+  meshColor: {r: 1, g: 0, b: 0, a: 0.5}
+  sensorHeightOffset: -0.5
+  scanFrequency: 30
+  layers:
+    serializedVersion: 2
+    m_Bits: 128
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  currentObjects: []
+  colliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &1462396050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462396043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73bce3cd90fbdb54da1f78cc3e1ed646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseAIMode: 2
 --- !u!1 &1483621902
 GameObject:
   m_ObjectHideFlags: 0

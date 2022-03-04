@@ -24,6 +24,11 @@ public class PatrolUnit : Unit
         }
     }
 
+    public override void RequestNewPath()
+    {
+        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+    }
+
     private void GetNextPoint()
     {
         //increment to the next patrol point in the array
@@ -82,15 +87,41 @@ public class PatrolUnit : Unit
             }
 
             //rotate towards next waypoint
-            Vector3 targetDir = currentWaypoint - this.transform.position;
-            float step = this.rotationSpeed * Time.deltaTime;
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
+            if(shouldRotateNextPoint)
+            {
+                Vector3 targetDir = currentWaypoint - this.transform.position;
+                float step = this.rotationSpeed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDir);
+            }
+            else
+            {
+                Vector3 targetDir = target.transform.position - this.transform.position;
+                float step = this.rotationSpeed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDir);
+            }
 
             //move towards next waypoint
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    public override void StartChaseObject(GameObject newTarget)
+    {
+        followPath = false;
+        target = newTarget.transform;
+        shouldRotateNextPoint = false;
+        InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
+    }
+
+    public override void ResetFollowPath()
+    {
+        followPath = true;
+        target = patrolPoints[currentPatrolPointIndex].transform;
+        shouldRotateNextPoint = true;
+        CancelInvoke("RequestNewPath");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -104,20 +135,6 @@ public class PatrolUnit : Unit
             target = other.gameObject.transform;
             //request a path to the player and get a new path repeating on a set delay to account for the target moving
             InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //if player leaves trigger they arent in the object line of sight anymore
-        if(other.gameObject.tag == "Player")
-        {
-            //will be following the path again
-            followPath = true;
-            //set target back to the next patrol point in the array
-            target = patrolPoints[currentPatrolPointIndex].transform;
-            //cancel invoke to stop getting a new path to the player
-            CancelInvoke("RequestNewPath");
         }
     }
 
