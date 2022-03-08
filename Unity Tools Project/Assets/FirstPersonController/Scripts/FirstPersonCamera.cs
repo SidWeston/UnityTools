@@ -25,8 +25,8 @@ public class FirstPersonCamera : MonoBehaviour
     void Start()
     {
         //set cursor to be hidden and locked to the center of the screen
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame

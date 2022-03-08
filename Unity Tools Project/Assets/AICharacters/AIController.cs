@@ -52,31 +52,26 @@ public class AIController : MonoBehaviour
             if (!viewSensor.currentObjects.Contains(aiTarget))
             {
 
-                chaseSearchTimer -= Time.deltaTime;
-                
-                if(chaseSearchTimer <= 0)
-                {
-                    switch (baseAIMode)
-                    {
-                        case ControllerMode.PATROL:
-                            {
-                                pathfindingUnit.ResetFollowPath();
-                                break;
-                            }
-                        default:
-                            {
-                                break;
-                            }
-                    }
-                    chasing = false;
-                    chaseSearchTimer = maxSearchTimer;
-                }
+                Invoke("ResetPath", chaseSearchTimer);
+
+                chasing = false;
                 
             }
         }
 
     }
 
+    private void GetTargetLastLocation()
+    {
+        GameObject targetLastLocation = aiTarget;
+        pathfindingUnit.StartChaseObject(targetLastLocation);
+        Invoke("ResetPath", chaseSearchTimer);
+    }
+
+    private void ResetPath()
+    {
+        pathfindingUnit.ResetFollowPath();
+    }
 
     private bool GetSightTarget()
     {
