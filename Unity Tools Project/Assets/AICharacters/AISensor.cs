@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class AISensor : MonoBehaviour
 {
+    //variables for the size and colour of the sensor
     public float sensorDistance = 10;
     public float sensorAngle = 30;
     public float sensorHeight = 1;
-    public Color meshColor = Color.red;
+    public Color meshColour = Color.red;
 
     //offsets the height of where the field of view mesh starts
     public float sensorHeightOffset = 0;
@@ -45,7 +46,7 @@ public class AISensor : MonoBehaviour
     {
         wedgeMesh = CreateWedgeMesh();
         scanInterval = 1.0f / scanFrequency;
-        meshColor.a = 0.5f;
+        meshColour.a = 0.5f;
     }
 
     private Mesh CreateWedgeMesh()
@@ -160,8 +161,10 @@ public class AISensor : MonoBehaviour
             GameObject obj = colliders[i].gameObject;
             //tests whether the object is within the line of sight cone 
 
+            //perform line of sight test
             if (ObjectInSight(obj))
             {
+                //if successful, add it to the array of the current objects in line of sight
                 currentObjects.Add(obj);
             }
         }
@@ -174,32 +177,40 @@ public class AISensor : MonoBehaviour
         origin.y += sensorHeightOffset;
         Vector3 dest = obj.transform.position;
         Vector3 direction = dest - origin;
+        //check if the obj is neither higher than the sensor or lower
         if (direction.y < 0 || direction.y > sensorHeight)
         {
             Debug.Log("Object is too high or LOS cone is too low");
             return false;
         }
+        //set the y axis to 0 to ensure that only the x and z axis are taken into account
         direction.y = 0;
+        //get the angle of the target object relevant to the forward vector of the ai unit
         float deltaAngle = Vector3.Angle(direction, transform.forward);
+        //if the delta angle is greater than the angle of the sensor, the target object is not in line of sight
         if (deltaAngle > sensorAngle)
         {
             return false;
         }
+        //set the origin to be in the center of the sensor cone 
         origin.y += sensorHeight / 2;
         dest.y = origin.y;
+        //perform a raycast to test if there is any geometry in the way
         if (Physics.Linecast(origin, dest, occlusionLayers))
         {
+            //if the raycast hits anything, it means there is no line of sight
             return false;
         }
+        //otherwise, the ai should have clear line of sight to the target
         return true;
     }
 
     private void OnDrawGizmos()
     {
-
+        //check wedge mesh has been created successfully
         if (wedgeMesh)
         {
-            Gizmos.color = meshColor;
+            Gizmos.color = meshColour;
             Gizmos.DrawMesh(wedgeMesh, transform.position, transform.rotation);
         }
 
