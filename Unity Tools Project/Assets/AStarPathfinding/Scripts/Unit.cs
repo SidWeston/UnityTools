@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour
     [Tooltip("The GameObject that the AI unit will generate paths to and move towards.")]
     public Transform target;
     //the delay between the unit requesting new a new updated path from the path request manager
+    public bool doesUpdatePath = false;
     [Range(0, 2)]
     [Tooltip("The delay between the unit requesting a new updated path from the path request manager. Accounts for moving targets.")]
     public float newPathRequestDelay;
@@ -22,11 +23,22 @@ public class Unit : MonoBehaviour
     protected bool shouldRotateNextPoint = true;
     protected float rotationSpeed = 5;
 
+    [HideInInspector]
+    public bool isMoving = false;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
-        //gets initial path and then gets a new one after a set delay and repeats until game stops
-        InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
+        if(doesUpdatePath)
+        {
+            //gets initial path and then gets a new one after a set delay and repeats until game stops
+            InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
+        }
+        else
+        {
+            RequestNewPath();
+        }
+
     }
 
     public virtual void RequestNewPath()
@@ -41,6 +53,7 @@ public class Unit : MonoBehaviour
         {
             //pass through the path to follow
             path = newPath;
+            isMoving = true;
             //stops the coroutine to get rid of an old path if there was one
             StopCoroutine("FollowPath");
             //start the coroutine to follow the path
@@ -66,6 +79,8 @@ public class Unit : MonoBehaviour
                     targetIndex = 0;
                     //empty the path
                     path = new Vector3[0];
+                    //unit is no longer moving
+                    isMoving = false;
                     //break the loop
                     yield break;
                 }
