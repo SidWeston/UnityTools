@@ -9,15 +9,9 @@ public enum AIState
     PATROL,
     GUARD,
     CHASE,
-    SEARCH
+    SEARCH,
+    COVER
 }
-
-/// <summary>
-/// THIS IMPLEMENTATION IS FOR A GUARD AI
-/// IF NEEDED FOR ANOTHER KIND OF AI, COPY THE SCRIPT AND CHANGE IT TO FIT THE NEEDS OF THE PROJECT
-/// DONT BE A CUNT SID SAVE THE ORIGINAL STUFF 
-/// </summary>
-
 
 public class AIController : MonoBehaviour
 {
@@ -27,6 +21,7 @@ public class AIController : MonoBehaviour
     private AISensor viewSensor;
     private Unit pathfindingUnit;
     private AIWorldInfo worldInfo;
+    private AIHealth unitHealth;
 
     public PatrolPath patrolPath;
     private int patrolPathIndex = 0;
@@ -39,18 +34,18 @@ public class AIController : MonoBehaviour
     public float evaluationTimer = 0.1f;
     private float maxEvaluationTimer;
 
-    private bool hasNextPoint = false;
+    private void Awake()
+    {
+        worldInfo = GameObject.FindGameObjectWithTag("WorldInfo").GetComponent<AIWorldInfo>();
+        viewSensor = GetComponent<AISensor>();
+        pathfindingUnit = GetComponent<Unit>();
+        pathfindingUnit.target = patrolPath.patrolPoints[0].transform;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        viewSensor = GetComponent<AISensor>();
-        pathfindingUnit = GetComponent<Unit>();
-
         maxEvaluationTimer = evaluationTimer;
-
-        pathfindingUnit.target = patrolPath.patrolPoints[0].transform;
-
     }
 
     // Update is called once per frame
@@ -80,10 +75,10 @@ public class AIController : MonoBehaviour
                     //if the unit is moving to a point already no need to do anything
                     if(pathfindingUnit.isMoving)
                     {
-                        //if(GetSightTarget())
-                        //{
-                        //    currentState = AIState.CHASE;
-                        //}
+                        if(GetSightTarget())
+                        {
+                            currentState = AIState.CHASE;
+                        }
                         break;
                     }
                     else if(!pathfindingUnit.isMoving)
@@ -104,17 +99,29 @@ public class AIController : MonoBehaviour
                     if(!IsInvoking())
                     {
                         Invoke("GetNextPatrolPoint", pointWaitTimer);
-                        hasNextPoint = true;
                     }
                     
                     break;
                 }
             case AIState.CHASE:
                 {
+                    //if there isnt a target in line of sight the ai will go to guard mode
+                    if(!GetSightTarget())
+                    {
+                        currentState = AIState.GUARD;
+                        pathfindingUnit.UpdatePath(false);
+                        pathfindingUnit.shouldRotateNextPoint = true;
+                    }
+
                     break;
                 }
             case AIState.SEARCH:
                 {
+                    break;
+                }
+            case AIState.COVER:
+                {
+                    pathfindingUnit.target = GetNearestCoverPoint().transform;
                     break;
                 }
         }
@@ -138,18 +145,6 @@ public class AIController : MonoBehaviour
         currentState = AIState.PATROL;
     }
 
-    private void GetTargetLastLocation()
-    {
-        GameObject targetLastLocation = aiTarget;
-        pathfindingUnit.StartChaseObject(targetLastLocation);
-
-    }
-
-    private void ResetPath()
-    {
-        pathfindingUnit.ResetFollowPath();
-    }
-
     private bool GetSightTarget()
     {
         //if there is an object in the view sensor
@@ -164,15 +159,21 @@ public class AIController : MonoBehaviour
             {
                 aiTarget = viewSensor.currentObjects[0].transform.parent.gameObject;
             }
-            pathfindingUnit.StartChaseObject(aiTarget);
+            pathfindingUnit.target = aiTarget.transform;
+            pathfindingUnit.UpdatePath(true);
+            pathfindingUnit.shouldRotateNextPoint = false;
             return true;
         }
         return false;
     }
 
-    public void ObjectLeftSight()
+    private GameObject GetNearestCoverPoint()
     {
-        
+        GameObject coverPoint;
+
+        coverPoint = worldInfo.GetComponent<AIWorldInfo>().coverPoints[0];
+
+        return coverPoint;
     }
 
 }

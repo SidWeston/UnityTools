@@ -20,7 +20,8 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public Vector3[] path;
     protected int targetIndex;
-    protected bool shouldRotateNextPoint = true;
+    [HideInInspector]
+    public bool shouldRotateNextPoint = true;
     protected float rotationSpeed = 5;
 
     [HideInInspector]
@@ -39,6 +40,19 @@ public class Unit : MonoBehaviour
             RequestNewPath();
         }
 
+    }
+
+    public void UpdatePath(bool shouldUpdate)
+    {
+        if(shouldUpdate)
+        {
+            InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
+        }
+        else
+        {
+            CancelInvoke("RequestNewPath");
+        }
+        
     }
 
     public virtual void RequestNewPath()
@@ -88,11 +102,20 @@ public class Unit : MonoBehaviour
                 currentWaypoint = path[targetIndex];
             }
 
-            //rotate towards next waypoint
-            Vector3 targetDir = currentWaypoint - this.transform.position;
-            float step = this.rotationSpeed * Time.deltaTime;
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
+            if (shouldRotateNextPoint)
+            {
+                Vector3 targetDir = currentWaypoint - this.transform.position;
+                float step = this.rotationSpeed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDir);
+            }
+            else
+            {
+                Vector3 targetDir = target.transform.position - this.transform.position;
+                float step = this.rotationSpeed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDir);
+            }
 
             //move towards next waypoint
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed * Time.deltaTime);
