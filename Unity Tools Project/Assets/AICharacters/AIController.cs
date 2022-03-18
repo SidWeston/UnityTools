@@ -87,6 +87,11 @@ public class AIController : MonoBehaviour
                         currentState = AIState.GUARD;
                     }
 
+                    if(unitHealth.currentHealth < unitHealth.maxHealth)
+                    {
+                        
+                    }
+
                     break;
                 }
             case AIState.GUARD:
