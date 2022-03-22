@@ -16,6 +16,7 @@ public class AIHealth : MonoBehaviour
 
     public void ApplyDamage(float damageAmount)
     {
+        SendMessage("DamageTaken");
         currentHealth -= damageAmount;
         if(currentHealth <= 0)
         {

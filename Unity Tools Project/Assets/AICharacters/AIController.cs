@@ -29,6 +29,7 @@ public class AIController : MonoBehaviour
 
     //potential target for the ai to chase, will be set upon a target entering line of sight of the ai
     private GameObject aiTarget;
+    private bool hasCoverPoint = false;
 
     [Tooltip("How quickly should the ai evaluate a choice? Lower value = faster evaluation")]
     public float evaluationTimer = 0.1f;
@@ -37,6 +38,7 @@ public class AIController : MonoBehaviour
     private void Awake()
     {
         worldInfo = GameObject.FindGameObjectWithTag("WorldInfo").GetComponent<AIWorldInfo>();
+        unitHealth = GetComponent<AIHealth>();
         viewSensor = GetComponent<AISensor>();
         pathfindingUnit = GetComponent<Unit>();
         pathfindingUnit.target = patrolPath.patrolPoints[0].transform;
@@ -87,11 +89,6 @@ public class AIController : MonoBehaviour
                         currentState = AIState.GUARD;
                     }
 
-                    if(unitHealth.currentHealth < unitHealth.maxHealth)
-                    {
-                        
-                    }
-
                     break;
                 }
             case AIState.GUARD:
@@ -126,7 +123,23 @@ public class AIController : MonoBehaviour
                 }
             case AIState.COVER:
                 {
-                    pathfindingUnit.target = GetNearestCoverPoint().transform;
+                    if(pathfindingUnit.target != GetNearestCoverPoint().transform)
+                    {
+                        pathfindingUnit.target = GetNearestCoverPoint().transform;
+                        pathfindingUnit.RequestNewPath();
+                    }
+
+
+                    if(!pathfindingUnit.isMoving && Vector3.Distance(transform.position, pathfindingUnit.target.position) >= 0.1f)
+                    {
+                        pathfindingUnit.RequestNewPath();
+                    }
+
+                    if(!pathfindingUnit.isMoving && !IsInvoking() && Vector3.Distance(transform.position, pathfindingUnit.target.position) <= 1.5f)
+                    {
+                        Invoke("GetNextPatrolPoint", pointWaitTimer * 2);
+                    }
+
                     break;
                 }
         }
@@ -174,11 +187,29 @@ public class AIController : MonoBehaviour
 
     private GameObject GetNearestCoverPoint()
     {
-        GameObject coverPoint;
+        GameObject coverPoint = worldInfo.GetComponent<AIWorldInfo>().coverPoints[0];
 
-        coverPoint = worldInfo.GetComponent<AIWorldInfo>().coverPoints[0];
+        for(int i = 0; i < worldInfo.GetComponent<AIWorldInfo>().coverPoints.Count; i++)
+        {
+            GameObject currentPoint = worldInfo.GetComponent<AIWorldInfo>().coverPoints[i];
+            if(currentPoint == coverPoint)
+            {
+                continue;
+            }
+            
+            if(Vector3.Distance(this.transform.position, currentPoint.transform.position) < Vector3.Distance(this.transform.position, coverPoint.transform.position))
+            {
+                coverPoint = currentPoint;
+            }
+
+        }
 
         return coverPoint;
+    }
+
+    private void DamageTaken()
+    {
+        currentState = AIState.COVER;
     }
 
 }
