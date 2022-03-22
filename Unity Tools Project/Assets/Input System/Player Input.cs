@@ -49,6 +49,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5aaf35a-ddb5-429c-9c61-69e4c8e7c279"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""CameraLook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2009f8ad-6ec9-41e4-a280-34323f6c44ee"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -151,6 +170,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_FirstPersonCharacter_Jump = m_FirstPersonCharacter.FindAction("Jump", throwIfNotFound: true);
         m_FirstPersonCharacter_Sprint = m_FirstPersonCharacter.FindAction("Sprint", throwIfNotFound: true);
         m_FirstPersonCharacter_CameraLook = m_FirstPersonCharacter.FindAction("CameraLook", throwIfNotFound: true);
+        m_FirstPersonCharacter_Fire = m_FirstPersonCharacter.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,6 +224,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_FirstPersonCharacter_Jump;
     private readonly InputAction m_FirstPersonCharacter_Sprint;
     private readonly InputAction m_FirstPersonCharacter_CameraLook;
+    private readonly InputAction m_FirstPersonCharacter_Fire;
     public struct FirstPersonCharacterActions
     {
         private @PlayerInput m_Wrapper;
@@ -212,6 +233,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_FirstPersonCharacter_Jump;
         public InputAction @Sprint => m_Wrapper.m_FirstPersonCharacter_Sprint;
         public InputAction @CameraLook => m_Wrapper.m_FirstPersonCharacter_CameraLook;
+        public InputAction @Fire => m_Wrapper.m_FirstPersonCharacter_Fire;
         public InputActionMap Get() { return m_Wrapper.m_FirstPersonCharacter; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -233,6 +255,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @CameraLook.started -= m_Wrapper.m_FirstPersonCharacterActionsCallbackInterface.OnCameraLook;
                 @CameraLook.performed -= m_Wrapper.m_FirstPersonCharacterActionsCallbackInterface.OnCameraLook;
                 @CameraLook.canceled -= m_Wrapper.m_FirstPersonCharacterActionsCallbackInterface.OnCameraLook;
+                @Fire.started -= m_Wrapper.m_FirstPersonCharacterActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_FirstPersonCharacterActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_FirstPersonCharacterActionsCallbackInterface.OnFire;
             }
             m_Wrapper.m_FirstPersonCharacterActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @CameraLook.started += instance.OnCameraLook;
                 @CameraLook.performed += instance.OnCameraLook;
                 @CameraLook.canceled += instance.OnCameraLook;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
             }
         }
     }
@@ -259,5 +287,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnCameraLook(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
 }

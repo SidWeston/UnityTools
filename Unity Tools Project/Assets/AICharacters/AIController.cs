@@ -10,7 +10,8 @@ public enum AIState
     GUARD,
     CHASE,
     SEARCH,
-    COVER
+    COVER,
+    COMBAT
 }
 
 public class AIController : MonoBehaviour
@@ -22,6 +23,7 @@ public class AIController : MonoBehaviour
     private Unit pathfindingUnit;
     private AIWorldInfo worldInfo;
     private AIHealth unitHealth;
+    private AIWeapon unitWeapon;
 
     public PatrolPath patrolPath;
     private int patrolPathIndex = 0;
@@ -40,6 +42,7 @@ public class AIController : MonoBehaviour
         worldInfo = GameObject.FindGameObjectWithTag("WorldInfo").GetComponent<AIWorldInfo>();
         unitHealth = GetComponent<AIHealth>();
         viewSensor = GetComponent<AISensor>();
+        unitWeapon = GetComponent<AIWeapon>();
         pathfindingUnit = GetComponent<Unit>();
         pathfindingUnit.target = patrolPath.patrolPoints[0].transform;
     }
@@ -79,7 +82,7 @@ public class AIController : MonoBehaviour
                     {
                         if(GetSightTarget())
                         {
-                            currentState = AIState.CHASE;
+                            currentState = AIState.COMBAT;
                         }
                         break;
                     }
@@ -95,7 +98,7 @@ public class AIController : MonoBehaviour
                 {
                     if(GetSightTarget())
                     {
-                        currentState = AIState.CHASE;
+                        currentState = AIState.COMBAT;
                     }
 
                     if(!IsInvoking())
@@ -129,7 +132,6 @@ public class AIController : MonoBehaviour
                         pathfindingUnit.RequestNewPath();
                     }
 
-
                     if(!pathfindingUnit.isMoving && Vector3.Distance(transform.position, pathfindingUnit.target.position) >= 0.1f)
                     {
                         pathfindingUnit.RequestNewPath();
@@ -139,6 +141,23 @@ public class AIController : MonoBehaviour
                     {
                         Invoke("GetNextPatrolPoint", pointWaitTimer * 2);
                     }
+
+                    break;
+                }
+            case AIState.COMBAT:
+                {
+                    if(GetSightTarget())
+                    {
+                        pathfindingUnit.target = this.transform;
+                        pathfindingUnit.RequestNewPath();
+                        unitWeapon.StartCoroutine("FireWeapon");
+                        pathfindingUnit.LookTowards(aiTarget.transform.position);
+                    }
+                    else
+                    {
+                        unitWeapon.StopCoroutine("FireWeapon");
+                    }
+
 
                     break;
                 }

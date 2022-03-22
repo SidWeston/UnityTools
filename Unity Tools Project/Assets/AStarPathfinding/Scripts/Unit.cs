@@ -104,23 +104,25 @@ public class Unit : MonoBehaviour
 
             if (shouldRotateNextPoint)
             {
-                Vector3 targetDir = currentWaypoint - this.transform.position;
-                float step = this.rotationSpeed * Time.deltaTime;
-                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-                transform.rotation = Quaternion.LookRotation(newDir);
+                LookTowards(currentWaypoint);
             }
             else
             {
-                Vector3 targetDir = target.transform.position - this.transform.position;
-                float step = this.rotationSpeed * Time.deltaTime;
-                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-                transform.rotation = Quaternion.LookRotation(newDir);
+                LookTowards(target.transform.position);
             }
 
             //move towards next waypoint
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    public void LookTowards(Vector3 target)
+    {
+        Vector3 targetDir = target - this.transform.position;
+        float step = this.rotationSpeed;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDir);
     }
 
     public virtual void StartChaseObject(GameObject newTarget)
