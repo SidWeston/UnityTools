@@ -1264,7 +1264,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 1
-  coverSystem: {fileID: 0}
   patrolPath: {fileID: 6882373431538069630}
   pointWaitTimer: 1
   hasWeapon: 0

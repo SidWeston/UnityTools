@@ -170,10 +170,10 @@ public class AIController : MonoBehaviour
                         pathfindingUnit.RequestNewPath();
                     }
 
-                    if(!pathfindingUnit.isMoving && !IsInvoking() && Vector3.Distance(transform.position, pathfindingUnit.target.position) <= 1.5f)
-                    {
-                        Invoke("GetNextPatrolPoint", pointWaitTimer * 2);
-                    }
+                    //if(!pathfindingUnit.isMoving && !IsInvoking() && Vector3.Distance(transform.position, pathfindingUnit.target.position) <= 1.5f)
+                    //{
+                    //    Invoke("GetNextPatrolPoint", pointWaitTimer * 2);
+                    //}
 
                     break;
                 }
@@ -250,7 +250,6 @@ public class AIController : MonoBehaviour
 
     private void DamageTaken()
     {
-        Debug.Log("Here");
         currentState = AIState.COVER;
     }
 

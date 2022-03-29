@@ -139,6 +139,21 @@ public class AStarGrid : MonoBehaviour
         return false;
     }
 
+    public Vector3 GetNearestWalkableNode(Vector3 worldPosition)
+    {
+        Vector3 walkableNode = worldPosition;
+
+        foreach(AStarNode neighbour in GetNeighbours(GetNodeFromWorldPoint(worldPosition)))
+        {
+            if(neighbour.walkable)
+            {
+                walkableNode = neighbour.worldPosition;
+                break;
+            }
+        }
+        return walkableNode;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, gridWorldSize.z));
@@ -147,6 +162,7 @@ public class AStarGrid : MonoBehaviour
             foreach (AStarNode node in nodeGrid)
             {
                 Gizmos.color = (node.walkable) ? Color.white : Color.red;
+               
                 Gizmos.DrawCube(new Vector3(node.worldPosition.x, node.worldPosition.y - 0.4f, node.worldPosition.z), new Vector3(nodeDiameter - 0.1f, 0.1f, nodeDiameter - 0.1f));
             }
         }
