@@ -130,6 +130,15 @@ public class AStarGrid : MonoBehaviour
         return nodeGrid[x, z];
     }
 
+    public bool IsNodeWalkable(Vector3 worldPosition)
+    {
+        if(GetNodeFromWorldPoint(worldPosition).walkable)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, gridWorldSize.z));

@@ -24,13 +24,18 @@ public class AIController : MonoBehaviour
     private AIWorldInfo worldInfo;
     private AIHealth unitHealth;
     private AIWeapon unitWeapon;
+    private CoverSystem coverSystem;
 
     public PatrolPath patrolPath;
     private int patrolPathIndex = 0;
     public float pointWaitTimer = 1.0f;
 
+    public bool hasWeapon = true;
+
     //potential target for the ai to chase, will be set upon a target entering line of sight of the ai
     private GameObject aiTarget;
+    private GameObject tempTarget;
+    private float distanceToTarget;
     private bool hasCoverPoint = false;
 
     [Tooltip("How quickly should the ai evaluate a choice? Lower value = faster evaluation")]
@@ -43,8 +48,12 @@ public class AIController : MonoBehaviour
         unitHealth = GetComponent<AIHealth>();
         viewSensor = GetComponent<AISensor>();
         unitWeapon = GetComponent<AIWeapon>();
+        coverSystem = GetComponent<CoverSystem>();
         pathfindingUnit = GetComponent<Unit>();
         pathfindingUnit.target = patrolPath.patrolPoints[0].transform;
+        
+        tempTarget = new GameObject();
+        tempTarget.name = "Temp AI Target";
     }
 
     // Start is called before the first frame update
@@ -69,6 +78,12 @@ public class AIController : MonoBehaviour
 
     private void EvaluateAIChoice()
     {
+        //if there is a target, get the distance to the target
+        if (aiTarget)
+        {
+            distanceToTarget = Vector3.Distance(transform.position, aiTarget.transform.position);
+        }
+
         switch (currentState)
         {
             case AIState.WANDER:
@@ -82,7 +97,14 @@ public class AIController : MonoBehaviour
                     {
                         if(GetSightTarget())
                         {
-                            currentState = AIState.COMBAT;
+                            if(hasWeapon)
+                            {
+                                currentState = AIState.COMBAT;
+                            }
+                            else
+                            {
+                                currentState = AIState.CHASE;
+                            }
                         }
                         break;
                     }
@@ -98,7 +120,14 @@ public class AIController : MonoBehaviour
                 {
                     if(GetSightTarget())
                     {
-                        currentState = AIState.COMBAT;
+                        if(hasWeapon)
+                        {
+                            currentState = AIState.COMBAT;
+                        }
+                        else
+                        {
+                            currentState = AIState.CHASE;
+                        }
                     }
 
                     if(!IsInvoking())
@@ -126,10 +155,14 @@ public class AIController : MonoBehaviour
                 }
             case AIState.COVER:
                 {
-                    if(pathfindingUnit.target != GetNearestCoverPoint().transform)
+                    if(!hasCoverPoint)
                     {
-                        pathfindingUnit.target = GetNearestCoverPoint().transform;
+                        pathfindingUnit.target = coverSystem.GetNearestCoverPoint().transform;
                         pathfindingUnit.RequestNewPath();
+                        if(pathfindingUnit.target != null)
+                        {
+                            hasCoverPoint = true;
+                        }
                     }
 
                     if(!pathfindingUnit.isMoving && Vector3.Distance(transform.position, pathfindingUnit.target.position) >= 0.1f)
@@ -158,6 +191,17 @@ public class AIController : MonoBehaviour
                         unitWeapon.StopCoroutine("FireWeapon");
                     }
 
+                    if(unitHealth.currentHealth < unitHealth.maxHealth)
+                    {
+                        hasCoverPoint = false;
+                        currentState = AIState.COVER;
+                    }
+
+                    if(distanceToTarget > (viewSensor.sensorDistance / 2))
+                    {
+                        tempTarget.transform.position = Vector3.Lerp(transform.position, aiTarget.transform.position, 0.5f);
+                        pathfindingUnit.target = tempTarget.transform;
+                    }
 
                     break;
                 }
@@ -204,30 +248,9 @@ public class AIController : MonoBehaviour
         return false;
     }
 
-    private GameObject GetNearestCoverPoint()
-    {
-        GameObject coverPoint = worldInfo.GetComponent<AIWorldInfo>().coverPoints[0];
-
-        for(int i = 0; i < worldInfo.GetComponent<AIWorldInfo>().coverPoints.Count; i++)
-        {
-            GameObject currentPoint = worldInfo.GetComponent<AIWorldInfo>().coverPoints[i];
-            if(currentPoint == coverPoint)
-            {
-                continue;
-            }
-            
-            if(Vector3.Distance(this.transform.position, currentPoint.transform.position) < Vector3.Distance(this.transform.position, coverPoint.transform.position))
-            {
-                coverPoint = currentPoint;
-            }
-
-        }
-
-        return coverPoint;
-    }
-
     private void DamageTaken()
     {
+        Debug.Log("Here");
         currentState = AIState.COVER;
     }
 

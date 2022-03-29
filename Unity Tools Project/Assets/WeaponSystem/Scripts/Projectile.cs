@@ -29,8 +29,19 @@ public class Projectile : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.GetComponent<AIHealth>().ApplyDamage(bulletDamage);
-            //collision.rigidbody.AddForceAtPosition(GetComponent<Rigidbody>().velocity * 50f, collision.contacts[0].point);
             
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject == whoFired)
+        {
+            return; //early out
+        }
+        if(other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<AIHealth>().ApplyDamage(bulletDamage);
         }
     }
 }
