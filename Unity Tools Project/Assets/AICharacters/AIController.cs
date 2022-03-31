@@ -157,7 +157,7 @@ public class AIController : MonoBehaviour
                 {
                     if(!hasCoverPoint)
                     {
-                        pathfindingUnit.target = coverSystem.GetNearestCoverPoint().transform;
+                        pathfindingUnit.target = coverSystem.GetNearestCoverPoint(this.transform.position).transform;
                         pathfindingUnit.RequestNewPath();
                         if(pathfindingUnit.target != null)
                         {

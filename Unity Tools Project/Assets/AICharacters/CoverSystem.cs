@@ -23,9 +23,9 @@ public class CoverSystem : MonoBehaviour
 
     }
 
-    public GameObject GetNearestCoverPoint()
+    public GameObject GetNearestCoverPoint(Vector3 scanOrigin)
     {
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, GetComponent<AISensor>().sensorDistance, colliders, coverMask);
+        int hits = Physics.OverlapSphereNonAlloc(scanOrigin, GetComponent<AISensor>().sensorDistance, colliders, coverMask);
 
         for(int i = 0; i < hits; i++)
         {
@@ -35,15 +35,14 @@ public class CoverSystem : MonoBehaviour
             if (pathfindingRef.IsNodeWalkable(pointToTest))
             {
                 coverPoint.transform.position = pointToTest;    
-                if(LostLOS())
+                if(!CoverPointHasSight(coverPoint.transform.position))
                 {
                     return coverPoint;
                 }
                 else
                 {
-                    Debug.Log("here");
                     //calculate point to the other side 
-                    pointToTest.x += colliders[i].transform.localScale.x;
+                    pointToTest = colliders[i].ClosestPointOnBounds(pointToTest + (colliders[i].transform.position + colliders[i].transform.localScale));
                     coverPoint.transform.position = pathfindingRef.GetNearestWalkableNode(pointToTest);
                     return coverPoint;
                 }
@@ -51,21 +50,39 @@ public class CoverSystem : MonoBehaviour
             else
             {
                 coverPoint.transform.position = pathfindingRef.GetNearestWalkableNode(pointToTest);
-                if(LostLOS())
+                if(!CoverPointHasSight(coverPoint.transform.position))
                 {
                     return coverPoint;
                 }
                 else
                 {
-                    Debug.Log("here");
                     //calculate point to the other side
-                    pointToTest.x += colliders[i].transform.localScale.x;
+                    pointToTest = colliders[i].ClosestPointOnBounds(pointToTest + (colliders[i].transform.position + colliders[i].transform.localScale));
                     coverPoint.transform.position = pathfindingRef.GetNearestWalkableNode(pointToTest);
                     return coverPoint;
                 }
             }
         }
         return null;
+    }
+
+    private bool CoverPointHasSight(Vector3 coverPointPos)
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (!player)
+        {
+            return false; //early out
+        }
+        Debug.DrawLine(coverPointPos, player.transform.position, Color.red, 10.0f);
+
+        if (Physics.Linecast(coverPointPos, player.transform.position, coverMask))
+        {
+            Debug.Log("Hit Something");
+            return false;
+        }
+
+        return true;
     }
 
     private bool LostLOS()
@@ -89,6 +106,11 @@ public class CoverSystem : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        
     }
 
 }

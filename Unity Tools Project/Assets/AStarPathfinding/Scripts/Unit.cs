@@ -63,6 +63,11 @@ public class Unit : MonoBehaviour
 
     public virtual void OnPathFound(Vector3[] newPath, bool pathSuccessful)
     {
+        if(!GameObject.FindGameObjectWithTag("AStar").GetComponent<AStarGrid>().IsNodeWalkable(target.transform.position))
+        {
+            GameObject.FindGameObjectWithTag("AStar").GetComponent<AStarGrid>().GetNearestWalkableNode(target.transform.position);
+        }
+
         if(pathSuccessful)
         {
             //pass through the path to follow

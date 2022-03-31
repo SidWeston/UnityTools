@@ -143,6 +143,11 @@ public class AStarGrid : MonoBehaviour
     {
         Vector3 walkableNode = worldPosition;
 
+        if(GetNodeFromWorldPoint(worldPosition).walkable)
+        {
+            return worldPosition;
+        }
+
         foreach(AStarNode neighbour in GetNeighbours(GetNodeFromWorldPoint(worldPosition)))
         {
             if(neighbour.walkable)
