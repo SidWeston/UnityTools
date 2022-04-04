@@ -250,7 +250,7 @@ public class AIController : MonoBehaviour
 
     private void DamageTaken()
     {
-        currentState = AIState.COVER;
+        //currentState = AIState.COVER;
     }
 
 }
