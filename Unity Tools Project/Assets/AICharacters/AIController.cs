@@ -42,6 +42,10 @@ public class AIController : MonoBehaviour
     public float evaluationTimer = 0.1f;
     private float maxEvaluationTimer;
 
+    public MeshRenderer aiMesh;
+    [Tooltip("What colour the mesh will be depending on the state")]
+    public List<Material> stateMaterials;
+
     private void Awake()
     {
         worldInfo = GameObject.FindGameObjectWithTag("WorldInfo").GetComponent<AIWorldInfo>();
@@ -100,10 +104,12 @@ public class AIController : MonoBehaviour
                             if(hasWeapon)
                             {
                                 currentState = AIState.COMBAT;
+                                aiMesh.material = stateMaterials[1];
                             }
                             else
                             {
                                 currentState = AIState.CHASE;
+                                aiMesh.material = stateMaterials[1];
                             }
                         }
                         break;
@@ -123,10 +129,12 @@ public class AIController : MonoBehaviour
                         if(hasWeapon)
                         {
                             currentState = AIState.COMBAT;
+                            aiMesh.material = stateMaterials[1];
                         }
                         else
                         {
                             currentState = AIState.CHASE;
+                            aiMesh.material = stateMaterials[1];
                         }
                     }
 
@@ -143,6 +151,7 @@ public class AIController : MonoBehaviour
                     if(!GetSightTarget())
                     {
                         currentState = AIState.GUARD;
+                        aiMesh.material = stateMaterials[0];
                         pathfindingUnit.UpdatePath(false);
                         pathfindingUnit.shouldRotateNextPoint = true;
                     }
@@ -181,26 +190,28 @@ public class AIController : MonoBehaviour
                 {
                     if(GetSightTarget())
                     {
-                        pathfindingUnit.target = this.transform;
-                        pathfindingUnit.RequestNewPath();
                         unitWeapon.StartCoroutine("FireWeapon");
-                        pathfindingUnit.LookTowards(aiTarget.transform.position);
+                        pathfindingUnit.lookTarget = aiTarget.transform.position;
+                        pathfindingUnit.shouldRotateNextPoint = false;
                     }
                     else
                     {
                         unitWeapon.StopCoroutine("FireWeapon");
                     }
 
-                    if(unitHealth.currentHealth < unitHealth.maxHealth)
+                    if(distanceToTarget > viewSensor.sensorDistance - (viewSensor.sensorDistance / 10))
                     {
-                        hasCoverPoint = false;
-                        currentState = AIState.COVER;
-                    }
-
-                    if(distanceToTarget > (viewSensor.sensorDistance / 2))
-                    {
+                        //if the target gets too far away, move towards it
                         tempTarget.transform.position = Vector3.Lerp(transform.position, aiTarget.transform.position, 0.5f);
                         pathfindingUnit.target = tempTarget.transform;
+                        pathfindingUnit.RequestNewPath();
+                    }
+                    else if(distanceToTarget < viewSensor.sensorDistance / 2)
+                    {
+                        //move away if the target gets too close
+                        tempTarget.transform.position = -(transform.forward * (viewSensor.sensorDistance / 2));
+                        pathfindingUnit.target = tempTarget.transform;
+                        pathfindingUnit.RequestNewPath();
                     }
 
                     break;
@@ -240,9 +251,6 @@ public class AIController : MonoBehaviour
             {
                 aiTarget = viewSensor.currentObjects[0].transform.parent.gameObject;
             }
-            pathfindingUnit.target = aiTarget.transform;
-            pathfindingUnit.UpdatePath(true);
-            pathfindingUnit.shouldRotateNextPoint = false;
             return true;
         }
         return false;
@@ -250,7 +258,8 @@ public class AIController : MonoBehaviour
 
     private void DamageTaken()
     {
-        //currentState = AIState.COVER;
+        currentState = AIState.COVER;
+        aiMesh.material = stateMaterials[2];
     }
 
 }

@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour
     [Header("Unit Movement")]
     [Tooltip("The GameObject that the AI unit will generate paths to and move towards.")]
     public Transform target;
+    //what the unit will look towards
+    public Vector3 lookTarget; 
     //the delay between the unit requesting new a new updated path from the path request manager
     public bool doesUpdatePath = false;
     [Range(0, 2)]
@@ -42,10 +44,16 @@ public class Unit : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        LookTowards(lookTarget);
+    }
+
     public void UpdatePath(bool shouldUpdate)
     {
         if(shouldUpdate)
         {
+            CancelInvoke("RequestNewPath");
             InvokeRepeating("RequestNewPath", 0, newPathRequestDelay);
         }
         else
@@ -109,11 +117,7 @@ public class Unit : MonoBehaviour
 
             if (shouldRotateNextPoint)
             {
-                LookTowards(currentWaypoint);
-            }
-            else
-            {
-                LookTowards(target.transform.position);
+                lookTarget = currentWaypoint;
             }
 
             //move towards next waypoint

@@ -48,7 +48,7 @@ public class WeaponBase : MonoBehaviour
             bulletsLeft--;
             GameObject currentBullet = Instantiate(bullet, bulletSpawnLocation.transform.position, Quaternion.identity);
             currentBullet.GetComponent<Projectile>().whoFired = this.gameObject;
-            Destroy(currentBullet, 10.0f);
+            Destroy(currentBullet, 5.0f);
             float spreadAmountX = Random.Range(-spreadX, spreadX);
             float spreadAmountY = Random.Range(-spreadY / 2, spreadY / 2);
             currentBullet.transform.forward = directionToFire.normalized;

@@ -1291,6 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 5624847755644610671}
+  lookTarget: {x: 0, y: 0, z: 0}
   doesUpdatePath: 1
   newPathRequestDelay: 0.25
   moveSpeed: 5
@@ -1675,6 +1676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 5624847755644610671}
+  lookTarget: {x: 0, y: 0, z: 0}
   doesUpdatePath: 1
   newPathRequestDelay: 0.25
   moveSpeed: 5
@@ -1811,6 +1813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 5624847755644610671}
+  lookTarget: {x: 0, y: 0, z: 0}
   doesUpdatePath: 1
   newPathRequestDelay: 0.25
   moveSpeed: 5

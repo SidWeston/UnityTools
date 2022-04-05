@@ -37,5 +37,9 @@ public class Projectile : MonoBehaviour
         {
             other.gameObject.GetComponent<AIHealth>().ApplyDamage(bulletDamage);
         }
+        else if(other.gameObject.tag == "Player")
+        {
+            Debug.Log("Hit player");
+        }
     }
 }
