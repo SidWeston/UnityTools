@@ -2652,7 +2652,7 @@ GameObject:
   - component: {fileID: 951096692}
   - component: {fileID: 951096691}
   m_Layer: 0
-  m_Name: AI Guard
+  m_Name: Hubert II
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
