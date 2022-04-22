@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RepeatNode : DecoratorNode
+public class Repeater : DecoratorNode
 {
     protected override void OnStart()
     {

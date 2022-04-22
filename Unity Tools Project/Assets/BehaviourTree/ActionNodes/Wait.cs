@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitNode : ActionNode
+public class Wait : ActionNode
 {
 
     public float waitDuration = 1;

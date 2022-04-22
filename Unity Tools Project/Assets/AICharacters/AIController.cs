@@ -19,12 +19,12 @@ public class AIController : MonoBehaviour
     public AIState currentState = AIState.PATROL;
 
     //references to the view sensor and pathfinding unit for easy communication
-    private AISensor viewSensor;
-    private Unit pathfindingUnit;
-    private AIWorldInfo worldInfo;
-    private AIHealth unitHealth;
-    private AIWeapon unitWeapon;
-    private CoverSystem coverSystem;
+    [HideInInspector] public AISensor viewSensor;
+    [HideInInspector] public Unit pathfindingUnit;
+    [HideInInspector] public AIWorldInfo worldInfo;
+    [HideInInspector] public AIHealth unitHealth;
+    [HideInInspector] public AIWeapon unitWeapon;
+    [HideInInspector] public CoverSystem coverSystem;
 
     public PatrolPath patrolPath;
     private int patrolPathIndex = 0;
@@ -78,6 +78,11 @@ public class AIController : MonoBehaviour
             EvaluateAIChoice();
             evaluationTimer = maxEvaluationTimer;
         }
+    }
+
+    public void SetTarget(Transform newTarget)
+    {
+        pathfindingUnit.target = newTarget;
     }
 
     private void EvaluateAIChoice()
@@ -237,7 +242,7 @@ public class AIController : MonoBehaviour
         currentState = AIState.PATROL;
     }
 
-    private bool GetSightTarget()
+    public bool GetSightTarget()
     {
         //if there is an object in the view sensor
         if(viewSensor.currentObjects.Count > 0)

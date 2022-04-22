@@ -5,8 +5,16 @@
     </uie:Toolbar>
     <SplitView fixed-pane-initial-dimension="300">
         <ui:VisualElement name="LeftPanel">
-            <InspectorView />
-            <ui:Label text="Inspector" display-tooltip-when-elided="true" style="background-color: rgba(0, 0, 0, 0.29);" />
+            <SplitView orientation="Vertical" fixed-pane-initial-dimension="250">
+                <ui:VisualElement name="inspector-container">
+                    <InspectorView style="position: absolute; width: 301px;" />
+                    <ui:Label text="Inspector" display-tooltip-when-elided="true" style="background-color: rgba(0, 0, 0, 0.29);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="blackboard-container">
+                    <ui:Label text="Blackboard" display-tooltip-when-elided="true" name="Label" />
+                    <ui:IMGUIContainer />
+                </ui:VisualElement>
+            </SplitView>
         </ui:VisualElement>
         <ui:VisualElement name="RightPanel">
             <BehaviourTreeView focusable="true" style="flex-grow: 1;">

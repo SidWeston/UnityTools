@@ -15,7 +15,11 @@ public abstract class BTNode : ScriptableObject
     [HideInInspector] public State state = State.Running;
     [HideInInspector] public bool started = false;
     [HideInInspector] public string guid;
-    public Vector2 position;
+    [HideInInspector] public Vector2 position;
+    [HideInInspector] public Blackboard blackboard;
+    [HideInInspector] public AIController controller;
+    [HideInInspector] public int parentIndex;
+    [TextArea] public string description;
 
     public State Update()
     {
@@ -39,7 +43,6 @@ public abstract class BTNode : ScriptableObject
     public virtual BTNode Clone()
     {
         return Instantiate(this);
-        Debug.Log("Th");
     }
 
     protected abstract void OnStart();

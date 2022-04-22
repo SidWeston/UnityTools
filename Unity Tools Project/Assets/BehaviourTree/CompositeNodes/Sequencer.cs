@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SequencerNode : CompositeNode
+public class Sequencer : CompositeNode
 {
 
     int current;
 
     protected override void OnStart()
     {
+        //ensure current index is at 0 when node starts
         current = 0;
     }
 
@@ -22,6 +23,7 @@ public class SequencerNode : CompositeNode
         var child = children[current];
         switch (child.Update())
         {
+            //switch based on the state of the current child
             case State.Running:
                 {
                     return State.Running;
@@ -32,11 +34,13 @@ public class SequencerNode : CompositeNode
                 }
             case State.Success:
                 {
+                    //when one child finishes, increment to the next child
                     current++;
                     break;
                 }
         }
 
+        //if finsished the final child
         return current == children.Count ? State.Success : State.Running;
 
     }
