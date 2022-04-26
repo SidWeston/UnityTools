@@ -65,6 +65,13 @@ public class BehaviourTree : ScriptableObject
             composite.children.Add(child);
             EditorUtility.SetDirty(composite);
         }
+
+        ConditionalNode conditional = parent as ConditionalNode;
+        if(conditional)
+        {
+            conditional.children.Add(child);
+            EditorUtility.SetDirty(conditional);
+        }
     }
 
     public void RemoveChild(BTNode parent, BTNode child)
@@ -85,6 +92,12 @@ public class BehaviourTree : ScriptableObject
         if (composite)
         {
             composite.children.Remove(child);
+        }
+
+        ConditionalNode conditional = parent as ConditionalNode;
+        if (conditional)
+        {
+            conditional.children.Remove(child);
         }
     }
 
@@ -111,6 +124,12 @@ public class BehaviourTree : ScriptableObject
         if (composite)
         {
             return composite.children;
+        }
+
+        ConditionalNode conditional = parent as ConditionalNode;
+        if(conditional)
+        {
+            return conditional.children;
         }
 
         return children;

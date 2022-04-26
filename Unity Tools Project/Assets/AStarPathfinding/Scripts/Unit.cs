@@ -60,7 +60,12 @@ public class Unit : MonoBehaviour
         {
             CancelInvoke("RequestNewPath");
         }
-        
+
+    }
+
+    public void SetTargetVector(Vector3 newTarget)
+    {
+        target.position = newTarget;
     }
 
     public virtual void RequestNewPath()

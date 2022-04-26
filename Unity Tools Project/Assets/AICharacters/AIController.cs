@@ -54,10 +54,11 @@ public class AIController : MonoBehaviour
         unitWeapon = GetComponent<AIWeapon>();
         coverSystem = GetComponent<CoverSystem>();
         pathfindingUnit = GetComponent<Unit>();
-        pathfindingUnit.target = patrolPath.patrolPoints[0].transform;
         
+        //set the pathfinding target to be an empty game object
         tempTarget = new GameObject();
         tempTarget.name = "Temp AI Target";
+        pathfindingUnit.target = tempTarget.transform;
     }
 
     // Start is called before the first frame update
@@ -69,20 +70,21 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(evaluationTimer > 0)
-        {
-            evaluationTimer -= Time.deltaTime;
-        }
-        else if(evaluationTimer <= 0)
-        {
-            EvaluateAIChoice();
-            evaluationTimer = maxEvaluationTimer;
-        }
+        //if(evaluationTimer > 0)
+        //{
+        //    evaluationTimer -= Time.deltaTime;
+        //}
+        //else if(evaluationTimer <= 0)
+        //{
+        //    EvaluateAIChoice();
+        //    evaluationTimer = maxEvaluationTimer;
+        //}
     }
 
-    public void SetTarget(Transform newTarget)
+    public void SetTarget(Vector3 newTarget)
     {
-        pathfindingUnit.target = newTarget;
+        pathfindingUnit.SetTargetVector(newTarget);
+        pathfindingUnit.RequestNewPath();
     }
 
     private void EvaluateAIChoice()

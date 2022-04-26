@@ -27,7 +27,7 @@ public class FindNextWaypoint : ActionNode
         }
 
         //set the target position to be the next waypoint position 
-        blackboard.targetObject.transform.position = patrolPoints[waypointIndex].transform.position;
+        blackboard.targetPosition = patrolPoints[waypointIndex].transform.position;
         
         if (waypointIndex >= patrolPoints.Count - 1)
         {

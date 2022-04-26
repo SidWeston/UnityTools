@@ -123,6 +123,7 @@ public class BehaviourTreeView : GraphView
             {
                 NodeView parentView = edge.output.node as NodeView;
                 NodeView childView = edge.input.node as NodeView;
+
                 //add node as a child
                 tree.AddChild(parentView.node, childView.node);
                 //update the index of the child node
@@ -190,6 +191,13 @@ public class BehaviourTreeView : GraphView
             }
         }
         {
+            var types = TypeCache.GetTypesDerivedFrom<ConditionalNode>();
+            foreach (var type in types)
+            {
+                evt.menu.AppendAction($"[Conditional]/{type.Name}", (a) => CreateNode(type, nodePosition));
+            }
+        }
+        {
             var types = TypeCache.GetTypesDerivedFrom<DecoratorNode>();
             foreach (var type in types)
             {
@@ -236,6 +244,19 @@ public class BehaviourTreeView : GraphView
             return;
         }
 
+        //check if node is conditional
+        ConditionalNode conditional = node as ConditionalNode;
+        if (conditional && conditional.children != null)
+        {
+            //composite nodes can have multiple children
+            //loop through children array and set index
+            for (int i = 0; i < conditional.children.Count; i++)
+            {
+                conditional.children[i].parentIndex = i + 1;
+            }
+            //early out 
+            return;
+        }
     }
 
     void CreateNode(System.Type type, Vector2 position)

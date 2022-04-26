@@ -5,5 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class Blackboard 
 {
-    public GameObject targetObject;
+    public Vector3 targetPosition;
 }

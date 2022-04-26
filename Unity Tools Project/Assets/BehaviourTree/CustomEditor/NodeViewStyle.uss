@@ -120,7 +120,7 @@
 }
 
 .running #state-border {
-    background-color: rgba(247, 255, 0, 255);
+    background-color: rgb(247, 255, 0);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -128,7 +128,7 @@
 }
 
 .failure #state-border {
-    background-color: rgba(255, 0, 0, 255);
+    background-color: rgb(255, 0, 0);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -136,9 +136,13 @@
 }
 
 .success #state-border {
-    background-color: rgba(56, 255, 0, 255);
+    background-color: rgb(56, 255, 0);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.conditional #input {
+    background-color: rgba(159, 3, 197, 255);
 }

@@ -52,6 +52,10 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
         {
             AddToClassList("decorator");
         }
+        else if(node is ConditionalNode)
+        {
+            AddToClassList("conditional");
+        }
         else if (node is RootNode)
         {
             AddToClassList("root");
@@ -69,6 +73,10 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
             inputPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
         }
         else if(node is DecoratorNode)
+        {
+            inputPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
+        }
+        else if (node is ConditionalNode)
         {
             inputPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(bool));
         }
@@ -98,6 +106,10 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
         else if (node is DecoratorNode)
         {
             outputPort = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Single, typeof(bool));
+        }
+        else if (node is ConditionalNode)
+        {
+            outputPort = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(bool));
         }
         else if(node is RootNode)
         {
@@ -136,6 +148,12 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
         if(composite)
         {
             composite.children.Sort(SortByHorizontalPosition);
+        }
+
+        ConditionalNode conditional = node as ConditionalNode;
+        if(conditional)
+        {
+            conditional.children.Sort(SortByHorizontalPosition);
         }
     }
 

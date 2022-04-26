@@ -115,14 +115,20 @@ public class BehaviourTreeEditor : EditorWindow
         {
             if (tree)
             {
-                treeView.PopulateView(tree);
+                if(treeView != null)
+                {
+                    treeView.PopulateView(tree);
+                }
             }
         }
         else
         {
             if (tree && AssetDatabase.CanOpenAssetInEditor(tree.GetInstanceID()))
             {
-                treeView.PopulateView(tree);
+                if(treeView != null)
+                {
+                    treeView.PopulateView(tree);
+                }
             }
         }
 

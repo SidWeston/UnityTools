@@ -6,10 +6,12 @@ public class MoveToPosition : ActionNode
 {
 
     private bool targetSet = false;
+    private bool pathFound = false;
 
     protected override void OnStart()
     {
         targetSet = false;
+        pathFound = false;
     }
 
     protected override void OnStop()
@@ -19,21 +21,27 @@ public class MoveToPosition : ActionNode
 
     protected override State OnUpdate()
     {   
-        if(blackboard.targetObject != null && !targetSet)
+        if(blackboard.targetPosition != null && !targetSet && controller != null)
         {
-            controller.SetTarget(blackboard.targetObject.transform);    
+            controller.SetTarget(blackboard.targetPosition);
+            targetSet = true;
         }
-        else
+        else if(blackboard.targetPosition == null)
         {
             return State.Failure;
         }
 
-        if(controller.pathfindingUnit.isMoving)
+        if (!controller.pathfindingUnit.isMoving && pathFound)
         {
-            return State.Running;
+            return State.Success;
+        }
+        else if(controller.pathfindingUnit.isMoving)
+        {
+            pathFound = true;
         }
 
-        return State.Success;
+
+        return State.Running;
 
     }
 }
