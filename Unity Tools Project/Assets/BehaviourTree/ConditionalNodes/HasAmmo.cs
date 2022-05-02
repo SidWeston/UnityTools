@@ -16,6 +16,27 @@ public class HasAmmo : ConditionalNode
 
     protected override State OnUpdate()
     {
-        return State.Success;
+        if(controller.unitWeapon.currentWeapon.GetComponent<WeaponBase>().bulletsLeft > 0)
+        {
+            if(children[0] != null)
+            {
+                children[0].Update();
+                return State.Running;
+            }
+            return State.Failure;
+        }
+        else if(controller.unitWeapon.currentWeapon.GetComponent<WeaponBase>().bulletsLeft <= 0)
+        {
+            if(children[1] != null)
+            {
+                children[1].Update();
+                return State.Running;
+            }
+            return State.Failure;
+        }
+        else
+        {
+            return State.Success;
+        }
     }
 }

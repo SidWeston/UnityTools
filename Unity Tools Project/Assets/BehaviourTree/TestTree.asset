@@ -1,26 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8723054109128391187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecff241f4cdb8244b881036f023c1bbc, type: 3}
-  m_Name: ShootTarget
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 1e4fdf2c4899af045be0dcf7e73209af
-  position: {x: -797.25507, y: 659.80505}
-  blackboard:
-    targetPosition: {x: 0, y: 0, z: 0}
-  controller: {fileID: 0}
-  parentIndex: 1
-  description: 
 --- !u!114 &-7872272141919872692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,9 +15,10 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: bfd656e0cfd72d545a4c35f6485938ae
-  position: {x: 779.60236, y: 302.68393}
+  position: {x: 638.6218, y: 322.75302}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 2
   description: Patrol Paths
@@ -61,14 +41,37 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 1fd13135aac998949a034bf340bdbb6c
-  position: {x: 1003.6023, y: 450.68387}
+  position: {x: 885.6218, y: 495.75293}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 3
   description: 
   waitDuration: 3
---- !u!114 &-2766874476607146297
+--- !u!114 &-6329242521767772434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373a8bda7f873c6428df73eafa30bb7e, type: 3}
+  m_Name: FindCombatPosition
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: eef0b4276c193c341bf3108cb465e95e
+  position: {x: -381.99997, y: 661.10004}
+  blackboard:
+    targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
+  controller: {fileID: 0}
+  parentIndex: 2
+  description: 
+--- !u!114 &-4602616511910474528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,15 +85,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: e0ef2ce77ebd3134d9a72a7bc67499e3
-  position: {x: -533.2901, y: 478.3225}
+  guid: 9d63d4c853b920e4caf8917471bef514
+  position: {x: -828.25006, y: 516.8001}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 1
   description: 
   children:
-  - {fileID: -8723054109128391187}
+  - {fileID: -697902599103744927}
+  - {fileID: -336950304743635772}
 --- !u!114 &-2629644017621570913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,13 +111,14 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 0253e14f37b192f4692749e4bf2fa4f1
-  position: {x: 512.03253, y: 454.96753}
+  position: {x: 388.62186, y: 492.75302}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 1
   description: 
---- !u!114 &-934297634406638412
+--- !u!114 &-697902599103744927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,21 +127,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d9179d6d13fb864bb3da16817fe315f, type: 3}
-  m_Name: TargetInSight
+  m_Script: {fileID: 11500000, guid: ecff241f4cdb8244b881036f023c1bbc, type: 3}
+  m_Name: StartShooting
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: d0e2a82cdad806f4cb8c112b57363b0c
-  position: {x: 19.501993, y: 156.23907}
+  guid: ad34a8ec37df220418f105612ab836de
+  position: {x: -993.90015, y: 666.1}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 1
   description: 
-  children:
-  - {fileID: 7271640699397070124}
-  - {fileID: -7872272141919872692}
+--- !u!114 &-336950304743635772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e268f32bd955a9f49a641a8156f01a91, type: 3}
+  m_Name: ReloadWeapon
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: b11274f2d83733a4eb64335efbde95cd
+  position: {x: -644.4001, y: 661.40015}
+  blackboard:
+    targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
+  controller: {fileID: 0}
+  parentIndex: 2
+  description: 
+  aiWeapon: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,22 +175,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548be963aefa75e4e8143b3eb160882d, type: 3}
   m_Name: TestTree
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 4554374594700054938}
+  rootNode: {fileID: 2080332056929789194}
   treeState: 0
   nodes:
-  - {fileID: 4554374594700054938}
   - {fileID: -2629644017621570913}
   - {fileID: -7872272141919872692}
   - {fileID: 6511712572577270597}
   - {fileID: -7199763123169138157}
   - {fileID: 4870992999808169983}
   - {fileID: 7271640699397070124}
-  - {fileID: -2766874476607146297}
-  - {fileID: -934297634406638412}
-  - {fileID: -8723054109128391187}
+  - {fileID: 5846089626490474488}
+  - {fileID: 2080332056929789194}
+  - {fileID: -4602616511910474528}
+  - {fileID: -336950304743635772}
+  - {fileID: -6329242521767772434}
+  - {fileID: 4840713734222846292}
+  - {fileID: -697902599103744927}
+  - {fileID: 2453831654767152478}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
---- !u!114 &4554374594700054938
+    shooting: 0
+--- !u!114 &2080332056929789194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,14 +209,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 6b37081629ec97f4f87018c0257a99e5
-  position: {x: 23.292221, y: -105.47921}
+  guid: 4302a26d1e731d249b1f8c554e6fb4ba
+  position: {x: -32.997536, y: -196.7425}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 0
   description: 
   child: {fileID: 4870992999808169983}
+--- !u!114 &2453831654767152478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d3c86d5025cf144bca1e2852f13a58, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: dbe38d59ed0084e48a1d5e9720bc2a42
+  position: {x: 0, y: 0}
+  blackboard:
+    targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
+  controller: {fileID: 0}
+  parentIndex: 0
+  description: 
+  children: []
+--- !u!114 &4840713734222846292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7abdf0fa0d90d49b5e1662204738d8, type: 3}
+  m_Name: MoveToPosition
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 67c7008253e4d84489ad589abf9389e0
+  position: {x: -101.09997, y: 658.10004}
+  blackboard:
+    targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
+  controller: {fileID: 0}
+  parentIndex: 3
+  description: 
 --- !u!114 &4870992999808169983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,13 +278,39 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 30b481a7d2a8453419c2dea73dfc533c
-  position: {x: 22.29229, y: 1.5208521}
+  position: {x: -33.64248, y: -31.644989}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 1
   description: 
-  child: {fileID: -934297634406638412}
+  child: {fileID: 5846089626490474488}
+--- !u!114 &5846089626490474488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9179d6d13fb864bb3da16817fe315f, type: 3}
+  m_Name: TargetInSight
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: db6ec15cbbea2474cb5c0145250b4427
+  position: {x: -33.20007, y: 121.25}
+  blackboard:
+    targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
+  controller: {fileID: 0}
+  parentIndex: 1
+  description: 
+  children:
+  - {fileID: 7271640699397070124}
+  - {fileID: -7872272141919872692}
 --- !u!114 &6511712572577270597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,9 +326,10 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 31e99e3ec8e243048a8eb95443dd7057
-  position: {x: 772.60236, y: 451.6839}
+  position: {x: 631.85004, y: 495}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 2
   description: 
@@ -243,11 +348,14 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 10faed6f0aabd074b884892352792a24
-  position: {x: -294.9351, y: 283.29}
+  position: {x: -393.68793, y: 310.64615}
   blackboard:
     targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
   controller: {fileID: 0}
   parentIndex: 1
   description: Combat
   children:
-  - {fileID: -2766874476607146297}
+  - {fileID: -4602616511910474528}
+  - {fileID: -6329242521767772434}
+  - {fileID: 4840713734222846292}

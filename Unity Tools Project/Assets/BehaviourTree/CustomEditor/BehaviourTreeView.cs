@@ -12,6 +12,7 @@ public class BehaviourTreeView : GraphView
     public Action<NodeView> OnNodeSelected;
     public new class UxmlFactory : UxmlFactory<BehaviourTreeView, GraphView.UxmlTraits> { }
     BehaviourTree tree;
+    NodeView rootChild;
     public BehaviourTreeView()
     {
         Insert(0, new GridBackground());
@@ -49,6 +50,7 @@ public class BehaviourTreeView : GraphView
         if(tree.rootNode == null)
         {
             tree.rootNode = tree.CreateNode(typeof(RootNode)) as RootNode;
+            
             EditorUtility.SetDirty(tree);
             AssetDatabase.SaveAssets();
         }
@@ -69,6 +71,12 @@ public class BehaviourTreeView : GraphView
             });
         });
 
+        RootNode root = tree.rootNode as RootNode;
+        if(root != null && root.child != null)
+        {
+            rootChild = GetNodeByGuid(root.child.guid) as NodeView;
+        }
+
     }
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -84,9 +92,16 @@ public class BehaviourTreeView : GraphView
                 if (nodeView != null)
                 {
                     RootNode root = nodeView.node as RootNode;
-                    if(root == null)
+                    if (root == null)
                     {
                         tree.DeleteNode(nodeView.node);
+                    }
+                    else
+                    {
+                        tree.AddChild(tree.rootNode, rootChild.node);
+                        SetNodeIndex(tree.rootNode);
+                        rootChild.UpdateNameIndex();
+                        PopulateView(tree);
                     }
                 }
 
@@ -124,8 +139,18 @@ public class BehaviourTreeView : GraphView
                 NodeView parentView = edge.output.node as NodeView;
                 NodeView childView = edge.input.node as NodeView;
 
-                //add node as a child
+                ConditionalNode conditional = parentView.node as ConditionalNode;
+                if(conditional != null)
+                {
+                    if(conditional.children.Count > 1)
+                    {
+                        parentView.SortChildren();
+                        tree.RemoveChild(parentView.node, conditional.children[conditional.children.Count - 1]);
+                    }
+                }
+
                 tree.AddChild(parentView.node, childView.node);
+
                 //update the index of the child node
                 SetNodeIndex(parentView.node);
                 childView.UpdateNameIndex();
@@ -161,6 +186,7 @@ public class BehaviourTreeView : GraphView
 
             });
         }
+        PopulateView(tree);
         return graphViewChange;
     }
 

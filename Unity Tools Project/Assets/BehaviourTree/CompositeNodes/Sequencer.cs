@@ -40,7 +40,7 @@ public class Sequencer : CompositeNode
                 }
         }
 
-        //if finsished the final child
+        //if finsished the final child end, otherwise run again
         return current == children.Count ? State.Success : State.Running;
 
     }
