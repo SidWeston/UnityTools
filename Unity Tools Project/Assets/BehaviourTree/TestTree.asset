@@ -17,6 +17,7 @@ MonoBehaviour:
   guid: bfd656e0cfd72d545a4c35f6485938ae
   position: {x: 638.6218, y: 322.75302}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -43,6 +44,7 @@ MonoBehaviour:
   guid: 1fd13135aac998949a034bf340bdbb6c
   position: {x: 885.6218, y: 495.75293}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -64,8 +66,9 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: eef0b4276c193c341bf3108cb465e95e
-  position: {x: -381.99997, y: 661.10004}
+  position: {x: -379.67755, y: 661}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -88,6 +91,7 @@ MonoBehaviour:
   guid: 9d63d4c853b920e4caf8917471bef514
   position: {x: -828.25006, y: 516.8001}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -113,6 +117,7 @@ MonoBehaviour:
   guid: 0253e14f37b192f4692749e4bf2fa4f1
   position: {x: 388.62186, y: 492.75302}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -135,6 +140,7 @@ MonoBehaviour:
   guid: ad34a8ec37df220418f105612ab836de
   position: {x: -993.90015, y: 666.1}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -157,6 +163,7 @@ MonoBehaviour:
   guid: b11274f2d83733a4eb64335efbde95cd
   position: {x: -644.4001, y: 661.40015}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -191,8 +198,8 @@ MonoBehaviour:
   - {fileID: -6329242521767772434}
   - {fileID: 4840713734222846292}
   - {fileID: -697902599103744927}
-  - {fileID: 2453831654767152478}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
 --- !u!114 &2080332056929789194
@@ -212,35 +219,13 @@ MonoBehaviour:
   guid: 4302a26d1e731d249b1f8c554e6fb4ba
   position: {x: -32.997536, y: -196.7425}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
   parentIndex: 0
   description: 
   child: {fileID: 4870992999808169983}
---- !u!114 &2453831654767152478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74d3c86d5025cf144bca1e2852f13a58, type: 3}
-  m_Name: Sequencer
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: dbe38d59ed0084e48a1d5e9720bc2a42
-  position: {x: 0, y: 0}
-  blackboard:
-    targetPosition: {x: 0, y: 0, z: 0}
-    shooting: 0
-  controller: {fileID: 0}
-  parentIndex: 0
-  description: 
-  children: []
 --- !u!114 &4840713734222846292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,8 +241,9 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 67c7008253e4d84489ad589abf9389e0
-  position: {x: -101.09997, y: 658.10004}
+  position: {x: -101.32264, y: 658}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -280,6 +266,7 @@ MonoBehaviour:
   guid: 30b481a7d2a8453419c2dea73dfc533c
   position: {x: -33.64248, y: -31.644989}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -303,6 +290,7 @@ MonoBehaviour:
   guid: db6ec15cbbea2474cb5c0145250b4427
   position: {x: -33.20007, y: 121.25}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -328,6 +316,7 @@ MonoBehaviour:
   guid: 31e99e3ec8e243048a8eb95443dd7057
   position: {x: 631.85004, y: 495}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}
@@ -350,6 +339,7 @@ MonoBehaviour:
   guid: 10faed6f0aabd074b884892352792a24
   position: {x: -393.68793, y: 310.64615}
   blackboard:
+    aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
   controller: {fileID: 0}

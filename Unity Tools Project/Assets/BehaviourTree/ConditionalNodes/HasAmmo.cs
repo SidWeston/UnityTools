@@ -21,22 +21,25 @@ public class HasAmmo : ConditionalNode
             if(children[0] != null)
             {
                 children[0].Update();
-                return State.Running;
             }
-            return State.Failure;
+            else
+            {
+                return State.Failure;
+            }
         }
         else if(controller.unitWeapon.currentWeapon.GetComponent<WeaponBase>().bulletsLeft <= 0)
         {
             if(children[1] != null)
             {
                 children[1].Update();
-                return State.Running;
             }
-            return State.Failure;
+            else
+            {
+                return State.Failure;
+            }
+            
         }
-        else
-        {
-            return State.Success;
-        }
+
+        return State.Success;
     }
 }
