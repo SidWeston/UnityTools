@@ -66,6 +66,18 @@ public class Unit : MonoBehaviour
     public void SetTargetVector(Vector3 newTarget)
     {
         target.position = newTarget;
+        AStarGrid grid = GameObject.FindGameObjectWithTag("AStar").GetComponent<AStarGrid>();
+        if(grid != null)
+        {
+            if(grid.GetNodeFromWorldPoint(newTarget).walkable)
+            {
+                return;
+            }
+            else
+            {
+                target.position = grid.GetNearestWalkableNode(newTarget);
+            }
+        }
     }
 
     public virtual void RequestNewPath()

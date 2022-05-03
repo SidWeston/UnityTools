@@ -20,7 +20,12 @@ public class Wait : ActionNode
 
     protected override State OnUpdate()
     {
-        if(Time.time - startTime > waitDuration)
+        if (shouldFinish)
+        {
+            return State.Success;
+        }
+
+        if (Time.time - startTime > waitDuration)
         {
             return State.Success;
         }

@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveToPosition : ActionNode
+public class MoveToCombat : ActionNode
 {
-
     private bool targetSet = false;
     private bool pathFound = false;
-
     protected override void OnStart()
     {
         targetSet = false;
@@ -31,7 +29,7 @@ public class MoveToPosition : ActionNode
             controller.SetTarget(blackboard.targetPosition);
             targetSet = true;
         }
-        else if(blackboard.targetPosition == null)
+        else if (blackboard.targetPosition == null)
         {
             return State.Failure;
         }
@@ -40,13 +38,11 @@ public class MoveToPosition : ActionNode
         {
             return State.Success;
         }
-        else if(controller.pathfindingUnit.isMoving)
+        else if (controller.pathfindingUnit.isMoving)
         {
             pathFound = true;
         }
 
-
         return State.Running;
-
     }
 }

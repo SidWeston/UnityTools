@@ -20,7 +20,12 @@ public class FindNextWaypoint : ActionNode
     protected override State OnUpdate()
     {
 
-        if(patrolPoints == null)
+        if (shouldFinish)
+        {
+            return State.Success;
+        }
+
+        if (patrolPoints == null)
         {
             //will fail if there is no array to get points from
             return State.Failure;

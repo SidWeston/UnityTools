@@ -14,7 +14,12 @@ public class StopShooting : ActionNode
 
     protected override State OnUpdate()
     {
-        if(blackboard.shooting)
+        if (shouldFinish)
+        {
+            return State.Success;
+        }
+
+        if (blackboard.shooting)
         {
             controller.unitWeapon.StopCoroutine("FireWeapon");
             blackboard.shooting = false;

@@ -6,7 +6,6 @@ public class Sequencer : CompositeNode
 {
 
     int current;
-
     protected override void OnStart()
     {
         //ensure current index is at 0 when node starts
@@ -21,6 +20,16 @@ public class Sequencer : CompositeNode
     protected override State OnUpdate()
     {
         var child = children[current];
+
+        if(shouldFinish)
+        {
+            for(int i = 0; i < children.Count; i++)
+            {
+                children[i].ForceFinish();
+            }
+            return State.Success;
+        }
+
         switch (child.Update())
         {
             //switch based on the state of the current child
@@ -40,7 +49,7 @@ public class Sequencer : CompositeNode
                 }
         }
 
-        //if finsished the final child end, otherwise run again
+        //if finished the final child end, otherwise run again
         return current == children.Count ? State.Success : State.Running;
 
     }

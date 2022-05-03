@@ -14,6 +14,7 @@ public abstract class BTNode : ScriptableObject
 
     [HideInInspector] public State state = State.Running;
     [HideInInspector] public bool started = false;
+    [HideInInspector] public bool shouldFinish = false;
     [HideInInspector] public string guid;
     [HideInInspector] public Vector2 position;
     [HideInInspector] public Blackboard blackboard;
@@ -35,6 +36,7 @@ public abstract class BTNode : ScriptableObject
         {
             OnStop();
             started = false;
+            shouldFinish = false;
         }
 
         return state;
@@ -43,6 +45,11 @@ public abstract class BTNode : ScriptableObject
     public virtual BTNode Clone()
     {
         return Instantiate(this);
+    }
+
+    public virtual void ForceFinish()
+    {
+        shouldFinish = true;
     }
 
     protected abstract void OnStart();

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: bfd656e0cfd72d545a4c35f6485938ae
-  position: {x: 638.6218, y: 322.75302}
+  position: {x: 620.4849, y: 311.00003}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -25,7 +26,7 @@ MonoBehaviour:
   description: Patrol Paths
   children:
   - {fileID: -2629644017621570913}
-  - {fileID: 6511712572577270597}
+  - {fileID: 551069880601333804}
   - {fileID: -7199763123169138157}
 --- !u!114 &-7199763123169138157
 MonoBehaviour:
@@ -41,8 +42,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: 1fd13135aac998949a034bf340bdbb6c
-  position: {x: 885.6218, y: 495.75293}
+  position: {x: 868.3225, y: 532.93256}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -65,8 +67,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: eef0b4276c193c341bf3108cb465e95e
-  position: {x: -379.67755, y: 661}
+  position: {x: -414.60416, y: 666}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -88,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: 9d63d4c853b920e4caf8917471bef514
   position: {x: -828.25006, y: 516.8001}
   blackboard:
@@ -114,8 +118,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: 0253e14f37b192f4692749e4bf2fa4f1
-  position: {x: 388.62186, y: 492.75302}
+  position: {x: 371.32254, y: 529.93256}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -137,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: ad34a8ec37df220418f105612ab836de
   position: {x: -993.90015, y: 666.1}
   blackboard:
@@ -160,8 +166,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: b11274f2d83733a4eb64335efbde95cd
-  position: {x: -644.4001, y: 661.40015}
+  position: {x: -678.00024, y: 666.0001}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -187,7 +194,6 @@ MonoBehaviour:
   nodes:
   - {fileID: -2629644017621570913}
   - {fileID: -7872272141919872692}
-  - {fileID: 6511712572577270597}
   - {fileID: -7199763123169138157}
   - {fileID: 4870992999808169983}
   - {fileID: 7271640699397070124}
@@ -196,12 +202,37 @@ MonoBehaviour:
   - {fileID: -4602616511910474528}
   - {fileID: -336950304743635772}
   - {fileID: -6329242521767772434}
-  - {fileID: 4840713734222846292}
   - {fileID: -697902599103744927}
+  - {fileID: 551069880601333804}
+  - {fileID: 7679689926958598755}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
     shooting: 0
+--- !u!114 &551069880601333804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f108bba04fe97f14eb89a5458e861258, type: 3}
+  m_Name: MoveToWaypoint
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  shouldFinish: 0
+  guid: b7cb41e073f90bd45824b027a15a4155
+  position: {x: 607, y: 533}
+  blackboard:
+    aiTarget: {fileID: 0}
+    targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
+  controller: {fileID: 0}
+  parentIndex: 2
+  description: 
 --- !u!114 &2080332056929789194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,8 +247,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: 4302a26d1e731d249b1f8c554e6fb4ba
-  position: {x: -32.997536, y: -196.7425}
+  position: {x: -34, y: -153}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -226,29 +258,6 @@ MonoBehaviour:
   parentIndex: 0
   description: 
   child: {fileID: 4870992999808169983}
---- !u!114 &4840713734222846292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e7abdf0fa0d90d49b5e1662204738d8, type: 3}
-  m_Name: MoveToPosition
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 67c7008253e4d84489ad589abf9389e0
-  position: {x: -101.32264, y: 658}
-  blackboard:
-    aiTarget: {fileID: 0}
-    targetPosition: {x: 0, y: 0, z: 0}
-    shooting: 0
-  controller: {fileID: 0}
-  parentIndex: 3
-  description: 
 --- !u!114 &4870992999808169983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: 30b481a7d2a8453419c2dea73dfc533c
   position: {x: -33.64248, y: -31.644989}
   blackboard:
@@ -287,8 +297,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: db6ec15cbbea2474cb5c0145250b4427
-  position: {x: -33.20007, y: 121.25}
+  position: {x: -33.99998, y: 111.87477}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -299,29 +310,6 @@ MonoBehaviour:
   children:
   - {fileID: 7271640699397070124}
   - {fileID: -7872272141919872692}
---- !u!114 &6511712572577270597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e7abdf0fa0d90d49b5e1662204738d8, type: 3}
-  m_Name: MoveToPosition
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 31e99e3ec8e243048a8eb95443dd7057
-  position: {x: 631.85004, y: 495}
-  blackboard:
-    aiTarget: {fileID: 0}
-    targetPosition: {x: 0, y: 0, z: 0}
-    shooting: 0
-  controller: {fileID: 0}
-  parentIndex: 2
-  description: 
 --- !u!114 &7271640699397070124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
+  shouldFinish: 0
   guid: 10faed6f0aabd074b884892352792a24
   position: {x: -393.68793, y: 310.64615}
   blackboard:
@@ -348,4 +337,28 @@ MonoBehaviour:
   children:
   - {fileID: -4602616511910474528}
   - {fileID: -6329242521767772434}
-  - {fileID: 4840713734222846292}
+  - {fileID: 7679689926958598755}
+--- !u!114 &7679689926958598755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd246d63746b290479fc58c308d83ffb, type: 3}
+  m_Name: MoveToCombat
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  shouldFinish: 0
+  guid: c552d8b3d086a1e4b98badb084bfa8f4
+  position: {x: -115.50005, y: 666.0001}
+  blackboard:
+    aiTarget: {fileID: 0}
+    targetPosition: {x: 0, y: 0, z: 0}
+    shooting: 0
+  controller: {fileID: 0}
+  parentIndex: 3
+  description: 

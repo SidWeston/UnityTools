@@ -18,7 +18,13 @@ public class ReloadWeapon : ActionNode
 
     protected override State OnUpdate()
     {
-        if(!aiWeapon)
+
+        if (shouldFinish)
+        {
+            return State.Success;
+        }
+
+        if (!aiWeapon)
         {
             return State.Failure;
         }

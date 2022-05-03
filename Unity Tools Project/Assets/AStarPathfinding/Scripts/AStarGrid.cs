@@ -24,8 +24,6 @@ public class AStarGrid : MonoBehaviour
 
     private void Awake()
     {
-
-
         CreateGrid();
     }
 

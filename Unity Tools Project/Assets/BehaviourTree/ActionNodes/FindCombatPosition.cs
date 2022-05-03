@@ -23,14 +23,22 @@ public class FindCombatPosition : ActionNode
     protected override State OnUpdate()
     {
 
-        if (distanceToTarget > controller.viewSensor.sensorDistance - (controller.viewSensor.sensorDistance / 10))
+        if(shouldFinish)
         {
-            blackboard.targetPosition = Vector3.Lerp(controller.transform.position, blackboard.aiTarget.transform.position, 0.5f);
+            return State.Success;
         }
-        else if (distanceToTarget < controller.viewSensor.sensorDistance / 2)
-        {
-            blackboard.targetPosition = (controller.transform.forward * (controller.viewSensor.sensorDistance / 2));
-        }
+
+        blackboard.targetPosition = Vector3.Lerp(controller.transform.position, blackboard.aiTarget.transform.position, 0.1f);
+
+        //if (distanceToTarget > controller.viewSensor.sensorDistance - (controller.viewSensor.sensorDistance / 10))
+        //{
+        //    blackboard.targetPosition = Vector3.Lerp(controller.transform.position, blackboard.aiTarget.transform.position, 0.5f);
+        //}
+        //else if (distanceToTarget < controller.viewSensor.sensorDistance / 2)
+        //{
+        //    blackboard.targetPosition = (controller.transform.forward * (controller.viewSensor.sensorDistance / 2));
+        //}
+        controller.pathfindingUnit.lookTarget = blackboard.aiTarget.transform.position;
 
         return State.Success;
     }

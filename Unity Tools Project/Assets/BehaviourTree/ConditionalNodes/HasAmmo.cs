@@ -16,10 +16,23 @@ public class HasAmmo : ConditionalNode
 
     protected override State OnUpdate()
     {
-        if(controller.unitWeapon.currentWeapon.GetComponent<WeaponBase>().bulletsLeft > 0)
+        if (shouldFinish)
+        {
+            for (int i = 0; i < children.Count; i++)
+            {
+                children[i].ForceFinish();
+            }
+            return State.Success;
+        }
+
+        if (controller.unitWeapon.currentWeapon.GetComponent<WeaponBase>().bulletsLeft > 0)
         {
             if(children[0] != null)
             {
+                if(children[1].started)
+                {
+                    children[1].ForceFinish();
+                }
                 children[0].Update();
             }
             else
@@ -31,6 +44,10 @@ public class HasAmmo : ConditionalNode
         {
             if(children[1] != null)
             {
+                if (children[0].started)
+                {
+                    children[0].ForceFinish();
+                }
                 children[1].Update();
             }
             else
