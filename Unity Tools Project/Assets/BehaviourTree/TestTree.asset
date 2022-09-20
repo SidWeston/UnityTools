@@ -16,7 +16,7 @@ MonoBehaviour:
   started: 0
   shouldFinish: 0
   guid: bfd656e0cfd72d545a4c35f6485938ae
-  position: {x: 620.4849, y: 311.00003}
+  position: {x: 622, y: 306}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   started: 0
   shouldFinish: 0
   guid: 1fd13135aac998949a034bf340bdbb6c
-  position: {x: 868.3225, y: 532.93256}
+  position: {x: 885.1925, y: 530.355}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
@@ -225,7 +225,7 @@ MonoBehaviour:
   started: 0
   shouldFinish: 0
   guid: b7cb41e073f90bd45824b027a15a4155
-  position: {x: 607, y: 533}
+  position: {x: 639.55255, y: 527.6775}
   blackboard:
     aiTarget: {fileID: 0}
     targetPosition: {x: 0, y: 0, z: 0}
