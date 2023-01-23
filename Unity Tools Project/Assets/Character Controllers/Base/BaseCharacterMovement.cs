@@ -12,7 +12,7 @@ public class BaseCharacterMovement : MonoBehaviour
 
     [Header("Ground Check")]
     //ground check
-    [HideInInspector] public bool grounded = false;
+    public bool grounded = false;
     [SerializeField] protected Transform groundCheckLocation;
     [SerializeField] protected LayerMask whatIsGround;
 
@@ -45,6 +45,12 @@ public class BaseCharacterMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         playerController.Move(velocity * Time.deltaTime);
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        //ground check
+        grounded = Physics.CheckSphere(groundCheckLocation.position, 0.125f, whatIsGround);
     }
 
     protected virtual void Setup()

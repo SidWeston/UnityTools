@@ -44,12 +44,6 @@ public class ThirdPersonMovement : BaseCharacterMovement
 
     }
 
-    void FixedUpdate()
-    {
-        //ground check
-        grounded = Physics.CheckSphere(groundCheckLocation.position, 0.1f, whatIsGround);
-    }
-
     private void HandleWalk()
     {
         //calculate the direction the player should move in based on the camera direction and WASD input
@@ -62,18 +56,14 @@ public class ThirdPersonMovement : BaseCharacterMovement
         //check if any movement keys are down before trying to add input direction
         if (movementInputDown)
         {
-            if(lockSpeed)
+            if (moveSpeed < targetSpeed)
             {
-                if (moveSpeed < targetSpeed)
-                {
-                    AccelerateSpeed();
-                }
-                else if (moveSpeed > targetSpeed)
-                {
-                    DecelerateSpeed();
-                }
+                AccelerateSpeed();
             }
-
+            else if (moveSpeed > targetSpeed)
+            {
+                DecelerateSpeed();
+            }
 
             //set the player's rotation to be the direction they are moving in
             meshTransform.rotation = Quaternion.Euler(0f, angle, 0f);

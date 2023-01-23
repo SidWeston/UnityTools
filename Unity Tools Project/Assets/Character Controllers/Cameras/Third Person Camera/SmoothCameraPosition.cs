@@ -20,8 +20,6 @@ public class SmoothCameraPosition : MonoBehaviour
 	Vector3 localPositionOffset;
 
 	Vector3 refVelocity;
-
-	//Awake;
 	void Awake()
 	{
 
@@ -46,23 +44,12 @@ public class SmoothCameraPosition : MonoBehaviour
 
 	void Update()
 	{
-		SmoothUpdate();
-	}
-
-	//void LateUpdate()
-	//{
-	//	SmoothUpdate();
-	//}
-
-	void SmoothUpdate()
-	{
 		//Smooth current position;
 		currentPosition = Smooth(currentPosition, target.position);
 
 		//Set position;
 		currentTransform.position = currentPosition;
 	}
-
 	Vector3 Smooth(Vector3 startPos, Vector3 targetPos)
 	{
 		//Convert local position offset to world coordinates;
